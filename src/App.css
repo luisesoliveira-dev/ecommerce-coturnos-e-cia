@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-army: #4a5c3a;
+  --color-gold: #d4af37;
+  --color-marrom: #81613e;
+  --color-azul: #142952;
+  --color-branco: #ffffff;
+  --color-preto: #000000;
+  --color-pretoclaro: #121212;
+  --font-barlow: "Barlow Condensed", sans-serif;
+}
+
+@keyframes slideInNext {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInPrev {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.bar-next {
+  animation: slideInNext 0.25s ease-out forwards;
+}
+
+.bar-prev {
+  animation: slideInPrev 0.25s ease-out forwards;
+}
