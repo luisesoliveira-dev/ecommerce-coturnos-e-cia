@@ -92,7 +92,7 @@ export const VitrineProdutos = () => {
 
   return (
     <section className="w-full py-10 sm:py-16 font-barlow overflow-hidden">
-      <div className="max-w-360 mx-auto w-full px-4 sm:px-8">
+      <div className="max-w-390 mx-auto w-full px-4 sm:px-8">
         {Header}
 
         {/* ── MOBILE / TABLET / DESKTOP lg — carrossel + barra (< 1280px) ── */}
@@ -110,6 +110,7 @@ export const VitrineProdutos = () => {
                   className="shrink-0 w-[calc(50%-6px)] sm:w-[calc(46%-6px)] md:w-[calc(39%-6px)] lg:w-[calc(25%-9px)]"
                 >
                   <CardProduto
+                    id={product.id}
                     title={product.name}
                     price={product.price}
                     oldPrice={product.oldPrice}
@@ -130,6 +131,7 @@ export const VitrineProdutos = () => {
           {filteredProducts.map((product) => (
             <CardProduto
               key={product.id}
+              id={product.id}
               title={product.name}
               price={product.price}
               oldPrice={product.oldPrice}

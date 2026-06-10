@@ -40,3 +40,32 @@
 .bar-prev {
   animation: slideInPrev 0.25s ease-out forwards;
 }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.25s ease-out forwards;
+}
+
+/* Regras globais de cursor para elementos interativos */
+@layer base {
+  button,
+  label,
+  select,
+  summary,
+  [role="button"],
+  input[type="range"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    cursor: pointer;
+  }
+}

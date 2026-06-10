@@ -3,80 +3,99 @@ import { CategoryFilter } from "./CategoryFilter";
 import { SizeFilter } from "./SizeFilter";
 import { ColorFilter } from "./ColorFilter";
 import { PriceRange } from "./PriceRange";
+import { useMemo } from "react";
 
-const TIPOS = [
-  { id: "coturno", label: "Coturnos", count: 18 },
-  { id: "bota-tatica", label: "Botas Táticas", count: 12 },
-  { id: "sapato-social", label: "Sapatos Sociais", count: 7 },
-];
+export function FilterSidebar({ products = [], filters, onChange, onClear }) {
+  // Gerando os filtros dinamicamente com base nos produtos passados via prop
+  const dynamicFilters = useMemo(() => {
+    const tiposMap = new Map();
+    const marcasMap = new Map();
+    const coresMap = new Map();
+    const tamanhosSet = new Set();
+    const materialSet = new Set();
+    const terrenoSet = new Set();
 
-const DESTAQUES = [
-  { id: "promocao", label: "Promoções", count: 5 },
-  { id: "classicos", label: "Mais Vendidos", count: 9 },
-  { id: "lancamentos", label: "Lançamentos", count: 5 },
-];
+    products.forEach((p) => {
+      if (p.tipo) tiposMap.set(p.tipo, (tiposMap.get(p.tipo) || 0) + 1);
+      if (p.marca) marcasMap.set(p.marca, (marcasMap.get(p.marca) || 0) + 1);
+      if (p.cor) coresMap.set(p.cor, (coresMap.get(p.cor) || 0) + 1);
+      if (p.tamanhos) p.tamanhos.forEach((t) => tamanhosSet.add(t));
+      if (p.material) materialSet.add(p.material);
+      if (p.terreno) terrenoSet.add(p.terreno);
+    });
 
-const MARCAS = [
-  { id: "borcegui", label: "Borcegui", count: 8 },
-  { id: "coturno-br", label: "Coturno BR", count: 6 },
-  { id: "militar-pro", label: "Militar Pro", count: 5 },
-  { id: "tacforce", label: "TacForce", count: 4 },
-  { id: "urbangear", label: "UrbanGear", count: 3 },
-];
+    return {
+      tipos: Array.from(tiposMap.entries()).map(([id, count]) => ({
+        id,
+        label: id.charAt(0).toUpperCase() + id.slice(1).replace("-", " "),
+        count,
+      })),
+      marcas: Array.from(marcasMap.entries()).map(([id, count]) => ({
+        id,
+        label: id,
+        count,
+      })),
+      cores: Array.from(coresMap.entries()).map(([id, count]) => ({
+        id,
+        label: id.charAt(0).toUpperCase() + id.slice(1),
+        count,
+        hex:
+          id === "preto"
+            ? "#1a1a1a"
+            : id === "marrom"
+              ? "#6B3A2A"
+              : id === "verde"
+                ? "#4B5320"
+                : id === "bege"
+                  ? "#C4A882"
+                  : "#cccccc",
+      })),
+      tamanhos: Array.from(tamanhosSet).sort((a, b) => a - b),
+      materiais: Array.from(materialSet).map((m) => ({ id: m, label: m })),
+      terrenos: Array.from(terrenoSet).map((t) => ({ id: t, label: t })),
+    };
+  }, [products]);
 
-const TAMANHOS = [38, 39, 40, 41, 42, 43, 44, 45];
-
-const CORES = [
-  { id: "preto", label: "Preto", hex: "#1a1a1a" },
-  { id: "marrom", label: "Marrom", hex: "#6B3A2A" },
-  { id: "verde", label: "Verde Militar", hex: "#4B5320" },
-  { id: "bege", label: "Bege", hex: "#C4A882" },
-  { id: "cinza", label: "Cinza", hex: "#6B6B6B" },
-];
-
-export function FilterSidebar({ filters, onChange, onClear }) {
   const hasActive =
     filters.tipos.length > 0 ||
-    filters.destaques.length > 0 ||
+    filters.destaques?.length > 0 ||
     filters.marcas.length > 0 ||
     filters.tamanhos.length > 0 ||
-    filters.cores.length > 0;
+    filters.cores.length > 0 ||
+    filters.materiais?.length > 0 ||
+    filters.terrenos?.length > 0;
 
   return (
-    <aside className="w-full font-barlow">
+    <aside className="w-full font-barlow lg:sticky lg:top-24">
       {/* Topo */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-        <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400">
-          Filtros
-        </span>
+      <div className="flex items-center justify-between pb-5 border-b-2 border-black">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-5 bg-army" />
+          <span className="text-[14px] font-black uppercase tracking-[0.15em] text-black">
+            Filtros
+          </span>
+        </div>
         {hasActive && (
           <button
             onClick={onClear}
-            className="text-[11px] font-bold uppercase tracking-widest text-army hover:text-black transition-colors"
+            className="text-[10px] font-black uppercase tracking-widest text-army hover:text-gold transition-colors cursor-pointer border-b border-army"
           >
-            Limpar tudo
+            Limpar
           </button>
         )}
       </div>
 
       <FilterSection title="Categorias">
         <CategoryFilter
-          options={TIPOS}
+          options={dynamicFilters.tipos}
           selected={filters.tipos}
           onChange={(v) => onChange({ ...filters, tipos: v })}
         />
       </FilterSection>
 
-      <FilterSection title="Destaques">
-        <CategoryFilter
-          options={DESTAQUES}
-          selected={filters.destaques}
-          onChange={(v) => onChange({ ...filters, destaques: v })}
-        />
-      </FilterSection>
-
       <FilterSection title="Faixa de Preço">
         <PriceRange
+          key={filters.preco.join("-")}
           min={0}
           max={1000}
           value={filters.preco}
@@ -86,7 +105,7 @@ export function FilterSidebar({ filters, onChange, onClear }) {
 
       <FilterSection title="Tamanho">
         <SizeFilter
-          sizes={TAMANHOS}
+          sizes={dynamicFilters.tamanhos}
           selected={filters.tamanhos}
           onChange={(v) => onChange({ ...filters, tamanhos: v })}
         />
@@ -94,15 +113,36 @@ export function FilterSidebar({ filters, onChange, onClear }) {
 
       <FilterSection title="Cor">
         <ColorFilter
-          colors={CORES}
+          colors={dynamicFilters.cores}
           selected={filters.cores}
           onChange={(v) => onChange({ ...filters, cores: v })}
         />
       </FilterSection>
 
+      {/* Filtros Táticos Avançados */}
+      {dynamicFilters.materiais.length > 0 && (
+        <FilterSection title="Material" defaultOpen={false}>
+          <CategoryFilter
+            options={dynamicFilters.materiais}
+            selected={filters.materiais || []}
+            onChange={(v) => onChange({ ...filters, materiais: v })}
+          />
+        </FilterSection>
+      )}
+
+      {dynamicFilters.terrenos.length > 0 && (
+        <FilterSection title="Tipo de Terreno" defaultOpen={false}>
+          <CategoryFilter
+            options={dynamicFilters.terrenos}
+            selected={filters.terrenos || []}
+            onChange={(v) => onChange({ ...filters, terrenos: v })}
+          />
+        </FilterSection>
+      )}
+
       <FilterSection title="Marca" defaultOpen={false}>
         <CategoryFilter
-          options={MARCAS}
+          options={dynamicFilters.marcas}
           selected={filters.marcas}
           onChange={(v) => onChange({ ...filters, marcas: v })}
         />

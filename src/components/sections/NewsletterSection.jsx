@@ -12,8 +12,8 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="w-full bg-[#F2F2F0] font-barlow border-t border-b border-gray-200">
-      <div className="max-w-360 mx-auto px-4 sm:px-8 py-10 sm:py-12">
+    <section className="w-full bg-[#F2F2F0] font-barlow">
+      <div className="max-w-390 mx-auto px-4 sm:px-8 py-10 sm:py-12">
         {!submitted ? (
           <div className="flex flex-col lg:flex-row items-left justify-between gap-6 lg:gap-16">
             {/* TEXTO */}

@@ -1,18 +1,21 @@
 import { useState, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { colecaoBanner, colecaoItens } from "../../data/colecao";
 import { ColecaoDestaqueBanner } from "./ColecaoDestaqueBanner";
 import { CardProduto } from "../ui/CardProduto";
 import { HorizontalDragScroll } from "../ui/HorizontalDragScroll";
 
-export function ColecaoDestaque() {
+export function ColecaoDestaque({ 
+  title = "O Clássico Reimaginado", 
+  banner, 
+  items = [] 
+}) {
   const [page, setPage] = useState(0);
 
   const desktopScrollRef = useRef(null);
   const desktopCardRefs = useRef([]);
 
   const rafId = useRef(null);
-  const total = colecaoItens.length;
+  const total = items?.length || 0;
 
   // ── Scroll suave com easing (botões de navegação) ─────
   const smoothScrollTo = useCallback((el, targetLeft) => {
@@ -36,6 +39,7 @@ export function ColecaoDestaque() {
   // ── Navegação (desktop) ────────────────────────────────
   const goTo = useCallback(
     (idx) => {
+      if (total === 0) return;
       const next = ((idx % total) + total) % total;
       setPage(next);
       const el = desktopScrollRef.current;
@@ -50,29 +54,28 @@ export function ColecaoDestaque() {
     [total, smoothScrollTo],
   );
 
+  if (!items || items.length === 0) return null;
+
   return (
     <section className="w-full overflow-hidden py-10 sm:py-16 font-barlow">
-      <div className="max-w-360 mx-auto w-full px-4 sm:px-8">
+      <div className="max-w-390 mx-auto w-full px-4 sm:px-8">
         {/* CABEÇALHO */}
         <div className="flex justify-between items-end mb-4 sm:mb-6">
           <div>
             <h2 className="text-[18px] sm:text-2xl lg:text-3xl font-black uppercase text-preto tracking-tight">
-              O Clássico Reimaginado
+              {title}
             </h2>
-            <p className="text-preto/60 text-[12px] sm:text-sm">
-              Nossa linha premium para as missões mais exigentes.
-            </p>
           </div>
           <div className="hidden lg:flex items-center gap-2">
             <button
               onClick={() => goTo(page - 1)}
-              className="w-10 h-10 border-2 border-preto flex items-center justify-center text-preto hover:bg-army hover:text-branco hover:border-army transition-colors cursor-pointer"
+              className="w-10 h-10 border-2 border-preto flex items-center justify-center text-preto hover:bg-army hover:text-branco hover:border-preto transition-colors cursor-pointer"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={() => goTo(page + 1)}
-              className="w-10 h-10 border-2 border-preto flex items-center justify-center text-preto hover:bg-army hover:text-branco hover:border-army transition-colors cursor-pointer"
+              className="w-10 h-10 border-2 border-preto flex items-center justify-center text-preto hover:bg-army hover:text-branco hover:border-preto transition-colors cursor-pointer"
             >
               <ChevronRight size={20} />
             </button>
@@ -82,14 +85,16 @@ export function ColecaoDestaque() {
         {/* MOBILE/TABLET */}
         <div className="lg:hidden flex flex-col gap-2">
           <div className="w-full aspect-16/9.5 overflow-hidden sm:w-[calc(100%+16px)]">
-            <ColecaoDestaqueBanner
-              image={colecaoBanner.image}
-              alt={colecaoBanner.alt}
-            />
+            {banner && (
+              <ColecaoDestaqueBanner
+                image={banner.image}
+                alt={banner.alt}
+              />
+            )}
           </div>
           <HorizontalDragScroll className="gap-2 pb-2">
             {(cardRefs) =>
-              colecaoItens.map((item, i) => (
+              items.map((item, i) => (
                 <div
                   key={item.id}
                   ref={(el) => {
@@ -98,6 +103,7 @@ export function ColecaoDestaque() {
                   className="shrink-0 w-[calc(50%-6px)] sm:w-[calc(46%-6px)] md:w-[calc(39%-6px)]"
                 >
                   <CardProduto
+                    id={item.id}
                     title={item.name}
                     price={item.price}
                     oldPrice={item.oldPrice}
@@ -115,10 +121,12 @@ export function ColecaoDestaque() {
         {/* DESKTOP */}
         <div className="hidden lg:flex gap-3 items-start">
           <div className="w-[46%] shrink-0 lg:aspect-[17/11.26] xl:aspect-[17/11.33] overflow-hidden">
-            <ColecaoDestaqueBanner
-              image={colecaoBanner.image}
-              alt={colecaoBanner.alt}
-            />
+            {banner && (
+              <ColecaoDestaqueBanner
+                image={banner.image}
+                alt={banner.alt}
+              />
+            )}
           </div>
           <HorizontalDragScroll
             ref={desktopScrollRef}
@@ -126,7 +134,7 @@ export function ColecaoDestaque() {
             trailingPadding={false}
           >
             {(cardRefs) =>
-              colecaoItens.map((item, i) => (
+              items.map((item, i) => (
                 <div
                   key={item.id}
                   ref={(el) => {
@@ -136,6 +144,7 @@ export function ColecaoDestaque() {
                   className="shrink-0 w-[calc(50%-6px)]"
                 >
                   <CardProduto
+                    id={item.id}
                     title={item.name}
                     price={item.price}
                     oldPrice={item.oldPrice}

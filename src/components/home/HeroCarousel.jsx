@@ -116,7 +116,7 @@ export const HeroCarousel = () => {
           prevSlide();
         }}
         aria-label="Slide anterior"
-        className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-preto/50 text-branco flex items-center justify-center hover:bg-gold hover:text-preto transition-colors z-30 cursor-pointer"
+        className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-preto/50 text-branco border-2 border-transparent hover:border-preto flex items-center justify-center hover:bg-gold hover:text-preto transition-colors z-30 cursor-pointer"
       >
         <ChevronLeft size={20} />
       </button>
@@ -126,7 +126,7 @@ export const HeroCarousel = () => {
           nextSlide();
         }}
         aria-label="Próximo slide"
-        className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-preto/50 text-branco flex items-center justify-center hover:bg-gold hover:text-preto transition-colors z-30 cursor-pointer"
+        className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-preto/50 text-branco border-2 border-transparent hover:border-preto flex items-center justify-center hover:bg-gold hover:text-preto transition-colors z-30 cursor-pointer"
       >
         <ChevronRight size={20} />
       </button>

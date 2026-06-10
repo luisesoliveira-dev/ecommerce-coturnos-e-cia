@@ -29,10 +29,10 @@ export function ProductGrid({ products, filtersVisible }) {
 
   return (
     <div
-      className={`grid gap-3 transition-all duration-300 ${
+      className={`grid transition-all duration-300 ${
         filtersVisible
-          ? "grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4"
+          ? "grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 xl:gap-6"
+          : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-3 lg:gap-6 xl:gap-6"
       }`}
     >
       {products.map((product, i) => (
@@ -42,6 +42,7 @@ export function ProductGrid({ products, filtersVisible }) {
           style={{ animationDelay: `${i * 30}ms` }}
         >
           <CardProduto
+            id={product.id}
             title={product.name}
             price={product.price}
             oldPrice={product.oldPrice}

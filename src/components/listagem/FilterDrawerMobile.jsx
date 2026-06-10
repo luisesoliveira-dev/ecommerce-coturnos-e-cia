@@ -1,11 +1,19 @@
 import { useEffect } from "react";
 import { FilterSidebar } from "./FilterSidebar";
 
-export function FilterDrawerMobile({ open, onClose, filters, onChange, onClear }) {
+export function FilterDrawerMobile({
+  open,
+  onClose,
+  filters,
+  onChange,
+  onClear,
+}) {
   // Trava scroll do body quando aberto
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
@@ -13,7 +21,9 @@ export function FilterDrawerMobile({ open, onClose, filters, onChange, onClear }
       {/* Overlay */}
       <div
         className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 lg:hidden ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          open
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
       />
@@ -22,8 +32,8 @@ export function FilterDrawerMobile({ open, onClose, filters, onChange, onClear }
       <div
         className={`fixed top-0 left-0 h-full w-[85vw] max-w-xs bg-white z-50 shadow-2xl
           transform transition-transform duration-300 ease-in-out lg:hidden flex flex-col ${
-          open ? "translate-x-0" : "-translate-x-full"
-        }`}
+            open ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {/* Header do drawer */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 shrink-0">
@@ -34,15 +44,29 @@ export function FilterDrawerMobile({ open, onClose, filters, onChange, onClear }
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-black transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
         {/* Conteúdo com scroll */}
         <div className="flex-1 overflow-y-auto px-5 py-2">
-          <FilterSidebar filters={filters} onChange={onChange} onClear={onClear} />
+          <FilterSidebar
+            filters={filters}
+            onChange={onChange}
+            onClear={onClear}
+          />
         </div>
 
         {/* Footer */}

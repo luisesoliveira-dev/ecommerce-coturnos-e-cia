@@ -40,7 +40,7 @@ export function Footer() {
   return (
     <footer className="bg-pretoclaro font-barlow w-full border-t border-gold/20">
       {/* ── GRID PRINCIPAL ── */}
-      <div className="max-w-360 mx-auto px-4 sm:px-8 pt-12 sm:pt-16 pb-8 sm:pb-12">
+      <div className="max-w-390 mx-auto px-4 sm:px-8 pt-12 sm:pt-16 pb-8 sm:pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           {/* ── COLUNA ESQUERDA: Marca + Contato + Social ── */}
           <div className="lg:col-span-4 flex flex-col gap-7 lg:pr-10 lg:border-r lg:border-branco/8">
@@ -222,7 +222,7 @@ export function Footer() {
 
       {/* ── RODAPÉ INFERIOR (Copyright) ── */}
       <div className="border-t border-branco/8 bg-preto/20">
-        <div className="max-w-360 mx-auto px-4 sm:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="max-w-390 mx-auto px-4 sm:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div className="text-center sm:text-left order-2 sm:order-1">
             <p className="text-gray-500 text-xs">
               &copy; {new Date().getFullYear()} Coturnos &amp; Cia — Todos os

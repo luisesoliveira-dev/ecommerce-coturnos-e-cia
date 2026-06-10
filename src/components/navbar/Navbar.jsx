@@ -21,7 +21,7 @@ export function Navbar() {
     <>
       {/* NAVBAR DESKTOP E BASE MOBILE — Agora Fixa (Sticky) */}
       <nav className="bg-branco border-b-[3px] border-army font-barlow sticky top-0 z-50 shadow-md">
-        <div className="max-w-360 mx-auto w-full h-16 flex items-center justify-between px-4 sm:px-8">
+        <div className="max-w-390 mx-auto w-full h-16 flex items-center justify-between px-4 sm:px-8">
           <div className="flex items-center gap-8 xl:gap-12 h-full">
             {/* LOGO */}
             <a href="/" className="flex items-center">

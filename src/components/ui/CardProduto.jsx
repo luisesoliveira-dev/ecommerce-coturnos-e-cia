@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
+
 export function CardProduto({
+  id,
   title,
   price,
   oldPrice,
@@ -15,8 +18,9 @@ export function CardProduto({
   };
 
   return (
-    <div
-      className={`group ${sizes[size]} flex flex-col bg-transparent border border-transparent hover:border-gold cursor-pointer`}
+    <Link
+      to={`/produto/${id}`}
+      className={`group ${sizes[size]} flex flex-col bg-transparent border border-transparent hover:border-gold cursor-pointer transition-all duration-300`}
     >
       {/* IMAGEM */}
       <div className="relative w-full aspect-17/20 overflow-hidden flex items-center justify-center bg-[#F5F0EA]">
@@ -33,7 +37,7 @@ export function CardProduto({
       </div>
 
       {/* INFO */}
-      <div className="mt-3 text-left px-1 pb-1">
+      <div className="mt-3 text-left pb-1 pl-0.5">
         <h3 className="font-barlow text-[13px] sm:text-[15px] font-bold text-preto leading-snug ">
           {title}
         </h3>
@@ -48,6 +52,6 @@ export function CardProduto({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

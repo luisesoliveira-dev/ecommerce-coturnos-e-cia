@@ -9,6 +9,11 @@ import { Navbar } from "../components/navbar/Navbar";
 import { AnnouncementBar } from "../components/home/AnnouncementBar";
 import { ColecaoDestaque } from "../components/home/ColecaoDestaque";
 import { NewsletterSection } from "../components/sections/NewsletterSection";
+import { SecondaryCarousel } from "../components/home/SecondaryCarousel";
+
+// Importando os dados para as coleções
+import { colecaoBanner, colecaoItens } from "../data/colecao";
+import { promoSlides } from "../data/promoSlides";
 
 export default function Home() {
   return (
@@ -24,14 +29,26 @@ export default function Home() {
       <SizeFilter />
 
       {/* 3. Destaque Estilo Vans (Curadoria com setinhas e animação) */}
-      <ColecaoDestaque />
+      <ColecaoDestaque 
+        title="O Clássico Reimaginado"
+        banner={colecaoBanner}
+        items={colecaoItens}
+      />
 
       {/* 4. Grade de Categorias Dinâmica */}
       <VitrineProdutos />
 
-      <ColecaoDestaque />
+      <ColecaoDestaque 
+        title="Nossa Linha Elite"
+        banner={colecaoBanner}
+        items={colecaoItens}
+      />
+      
       {/* 5. Banners de Coleções Finais (Com espaçamento no celular) */}
       <ColecaoBanner />
+
+      {/* 6. Carrossel Secundário (Promoções/Banners menores) */}
+      <SecondaryCarousel slides={promoSlides} />
 
       <NewsletterSection />
 
