@@ -2,28 +2,20 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 /**
  * Componente PriceRange otimizado para performance e fluidez.
- * Utiliza estado local para o movimento visual e notifica o pai 
+ * Utiliza estado local para o movimento visual e notifica o pai
  * de forma controlada.
  */
 export function PriceRange({ min = 0, max = 1000, value, onChange }) {
   // Estado local para garantir arraste suave (60fps)
   const [localMin, setLocalMin] = useState(value?.[0] ?? min);
   const [localMax, setLocalMax] = useState(value?.[1] ?? max);
-  
-  const rangeRef = useRef(null);
 
-  // Sincroniza com props externas apenas se necessário
-  useEffect(() => {
-    if (value) {
-      setLocalMin(value[0]);
-      setLocalMax(value[1]);
-    }
-  }, [value]);
+  const rangeRef = useRef(null);
 
   // Cálculo de porcentagem para posicionamento visual
   const getPercent = useCallback(
     (val) => Math.round(((val - min) / (max - min)) * 100),
-    [min, max]
+    [min, max],
   );
 
   // Atualiza a barra verde/army entre os seletores
@@ -81,60 +73,11 @@ export function PriceRange({ min = 0, max = 1000, value, onChange }) {
 
   return (
     <div className="px-1.5 pt-2 select-none">
-      <style>
-        {`
-          .thumb-input {
-            appearance: none;
-            -webkit-appearance: none;
-            pointer-events: none;
-            position: absolute;
-            height: 0;
-            width: 100%;
-            outline: none;
-            background: transparent;
-            margin: 0;
-          }
-
-          /* Estilo para Chrome/Safari/Edge */
-          .thumb-input::-webkit-slider-thumb {
-            appearance: none;
-            -webkit-appearance: none;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 50%;
-            height: 18px;
-            width: 18px;
-            pointer-events: all;
-            position: relative;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            transition: transform 0.1s ease;
-          }
-          
-          .thumb-input::-webkit-slider-thumb:active {
-            transform: scale(1.2);
-          }
-
-          /* Estilo para Firefox */
-          .thumb-input::-moz-range-thumb {
-            appearance: none;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 50%;
-            height: 18px;
-            width: 18px;
-            pointer-events: all;
-            position: relative;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            border: 2px solid black;
-          }
-        `}
-      </style>
-
       <div className="relative h-1.5 bg-black/10 rounded-full mb-8 mt-4 flex items-center">
         {/* Barra Ativa (cor entre os handles) */}
-        <div 
-          ref={rangeRef} 
-          className="absolute h-full bg-army z-10 rounded-full transition-all duration-75" 
+        <div
+          ref={rangeRef}
+          className="absolute h-full bg-army z-10 rounded-full transition-all duration-75"
         />
 
         {/* Sliders Reais (Invisíveis) */}
@@ -147,7 +90,7 @@ export function PriceRange({ min = 0, max = 1000, value, onChange }) {
           onChange={handleMinChange}
           onMouseUp={triggerChange}
           onTouchEnd={triggerChange}
-          className="thumb-input z-30"
+          className="range-slider-input z-30"
           style={{ zIndex: localMin > max - 100 ? 50 : 30 }}
         />
         <input
@@ -159,7 +102,7 @@ export function PriceRange({ min = 0, max = 1000, value, onChange }) {
           onChange={handleMaxChange}
           onMouseUp={triggerChange}
           onTouchEnd={triggerChange}
-          className="thumb-input z-20"
+          className="range-slider-input z-20"
         />
       </div>
 
@@ -181,9 +124,9 @@ export function PriceRange({ min = 0, max = 1000, value, onChange }) {
             />
           </div>
         </div>
-        
+
         <div className="w-4 h-px bg-black/10 mt-4" />
-        
+
         <div className="flex flex-col text-right flex-1">
           <span className="text-[10px] uppercase font-bold text-black/40 tracking-wider">
             Máximo

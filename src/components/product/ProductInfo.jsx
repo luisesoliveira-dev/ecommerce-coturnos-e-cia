@@ -1,18 +1,55 @@
-import { useState } from "react";
-import { ShoppingBag, ChevronRight, Truck } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingBag, ChevronRight, Truck, AlertCircle } from "lucide-react";
+import { useCart } from "../../context/useCart";
+import { motion } from "framer-motion";
 
-export function ProductInfo({ product }) {
+export function ProductInfo({ product, onOpenCart }) {
   const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0].id);
+  const [selectedColor, setSelectedColor] = useState(
+    product.colors?.[0]?.id || "",
+  );
   const [cep, setCep] = useState("");
+  const [isReturnOpen, setIsReturnOpen] = useState(false);
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const [isSpecsOpen, setIsSpecsOpen] = useState(false);
+  const [notification, setNotification] = useState(null);
+
+  const { addToCart } = useCart();
+
+  // Remove a notificação após 4 segundos
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
+
+  const handleAddToCart = () => {
+    // Se não selecionou tamanho, marca erro
+    if (!selectedSize) {
+      setNotification({ type: "error" });
+      return;
+    }
+
+    // Se chegou aqui, o tamanho está selecionado.
+    setNotification(null);
+
+    const colorName =
+      product.colors?.find((c) => c.id === selectedColor)?.name || "Padrão";
+    addToCart(product, 1, selectedSize, colorName);
+
+    if (onOpenCart) onOpenCart();
+  };
 
   const handleCepChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove o que não é dígito
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 5) {
       value = value.replace(/^(\d{5})(\d)/, "$1-$2");
     }
     setCep(value);
   };
+
+  const productSizes = product.sizes || product.tamanhos || [];
 
   return (
     <div className="flex flex-col gap-8 lg:sticky lg:top-32 h-fit font-barlow">
@@ -45,59 +82,80 @@ export function ProductInfo({ product }) {
       </div>
 
       {/* Seletor de Cores */}
-      <div className="flex flex-col gap-3">
-        <span className="text-sm font-bold uppercase tracking-wider text-preto">
-          Cor:
-          <span className="text-gray-500 font-medium ml-2 uppercase">
-            {product.colors.find((c) => c.id === selectedColor)?.name}
+      {product.colors && product.colors.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <span className="text-sm font-bold uppercase tracking-wider text-preto">
+            Cor:
+            <span className="text-gray-500 font-medium ml-2 uppercase">
+              {product.colors.find((c) => c.id === selectedColor)?.name}
+            </span>
           </span>
-        </span>
-        <div className="flex gap-3">
-          {product.colors.map((color) => (
-            <button
-              key={color.id}
-              onClick={() => setSelectedColor(color.id)}
-              className={`w-10 h-10 rounded-full border-2 transition-all ${
-                selectedColor === color.id
-                  ? "border-gold scale-110"
-                  : "border-transparent"
-              }`}
-              style={{ backgroundColor: color.hex }}
-              title={color.name}
-            />
-          ))}
+          <div className="flex gap-3">
+            {product.colors.map((color) => (
+              <button
+                key={color.id}
+                onClick={() => setSelectedColor(color.id)}
+                className={`w-10 h-10 rounded-full border-2 transition-all cursor-pointer ${
+                  selectedColor === color.id
+                    ? "border-gold scale-110"
+                    : "border-transparent"
+                }`}
+                style={{ backgroundColor: color.hex }}
+                title={color.name}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Seletor de Tamanhos */}
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-bold uppercase tracking-wider text-preto">
+          <span
+            className={`text-sm font-bold uppercase tracking-wider transition-colors ${notification?.type === "error" ? "text-red-600" : "text-preto"}`}
+          >
             Selecione o Tamanho
           </span>
-          <button className="text-xs underline text-gray-500 hover:text-black uppercase">
+          <button className="text-xs underline text-gray-500 hover:text-black uppercase cursor-pointer">
             Guia de Medidas
           </button>
         </div>
         <div className="grid grid-cols-4 gap-2">
-          {product.sizes.map((size) => (
+          {productSizes.map((size) => (
             <button
               key={size}
-              onClick={() => setSelectedSize(size)}
-              className={`py-3 text-sm font-bold border transition-all ${
+              onClick={() => {
+                setSelectedSize(size);
+                setNotification(null);
+              }}
+              className={`py-3 text-sm font-bold border transition-all cursor-pointer ${
                 selectedSize === size
                   ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-200 hover:border-black"
+                  : notification?.type === "error"
+                    ? "bg-white text-red-600 border-red-500 shadow-[0_0_0_1px_rgba(239,68,68,0.5)]"
+                    : "bg-white text-black border-gray-200 hover:border-black"
               }`}
             >
               {size}
             </button>
           ))}
         </div>
+        {notification?.type === "error" && (
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-[11px] font-bold uppercase tracking-widest text-red-600 mt-1 flex items-center gap-1"
+          >
+            <AlertCircle size={12} /> Seleção obrigatória: Escolha um número
+          </motion.span>
+        )}
       </div>
 
       {/* CTA Button */}
-      <button className="w-full bg-army hover:bg-black text-white py-6 flex items-center justify-center gap-3 transition-colors duration-300 group">
+      <button
+        onClick={handleAddToCart}
+        className="w-full bg-army hover:bg-black text-white py-6 flex items-center justify-center gap-3 transition-colors duration-300 group cursor-pointer"
+      >
         <ShoppingBag
           size={20}
           className="group-hover:scale-110 transition-transform"
@@ -124,7 +182,7 @@ export function ProductInfo({ product }) {
             onChange={handleCepChange}
             className="w-full min-w-0 bg-white border border-gray-200 px-3 xl:px-4 py-3 text-sm font-medium focus:border-army focus:outline-none transition-colors"
           />
-          <button className="bg-preto text-white px-4 xl:px-6 py-3 text-[10px] xl:text-xs font-bold uppercase tracking-widest hover:bg-army transition-colors shrink-0 flex items-center justify-center leading-none pt-3.25 pb-2.75">
+          <button className="bg-preto text-white px-4 xl:px-6 py-3 text-[10px] xl:text-xs font-bold uppercase tracking-widest hover:bg-army transition-colors shrink-0 flex items-center justify-center leading-none pt-3.25 pb-2.75 cursor-pointer">
             Calcular
           </button>
         </div>
@@ -138,14 +196,102 @@ export function ProductInfo({ product }) {
         </a>
       </div>
 
-      {/* Descrição */}
-      <div className="border-t border-gray-100 pt-8 mt-4">
-        <p className="text-gray-600 leading-relaxed font-medium">
-          {product.description}
-        </p>
-        <button className="flex items-center gap-1 mt-6 text-sm font-bold uppercase tracking-tighter hover:gap-2 transition-all">
-          Especificações Técnicas <ChevronRight size={16} />
-        </button>
+      {/* Bloco de Informações Accordion */}
+      <div className="border-t border-gray-100 mt-4">
+        {/* 1. Características do Produto */}
+        <div className="border-b border-gray-100 py-3.5">
+          <button
+            onClick={() => setIsFeaturesOpen(!isFeaturesOpen)}
+            className="w-full flex items-center justify-between text-[13px] font-bold uppercase tracking-widest text-preto group cursor-pointer"
+          >
+            Características do Produto
+            <ChevronRight
+              size={16}
+              className={`transition-transform duration-300 ${isFeaturesOpen ? "rotate-90" : ""}`}
+            />
+          </button>
+          <div
+            className={`overflow-hidden transition-all duration-300 ${isFeaturesOpen ? "max-h-60 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
+          >
+            <p className="text-gray-500 text-[13px] leading-relaxed">
+              {product.description}
+            </p>
+          </div>
+        </div>
+
+        {/* 2. Especificações Técnicas */}
+        <div className="border-b border-gray-100 py-3.5">
+          <button
+            onClick={() => setIsSpecsOpen(!isSpecsOpen)}
+            className="w-full flex items-center justify-between text-[13px] font-bold uppercase tracking-widest text-preto group cursor-pointer"
+          >
+            Especificações Técnicas
+            <ChevronRight
+              size={16}
+              className={`transition-transform duration-300 ${isSpecsOpen ? "rotate-90" : ""}`}
+            />
+          </button>
+          <div
+            className={`overflow-hidden transition-all duration-300 ${isSpecsOpen ? "max-h-60 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
+          >
+            <ul className="text-gray-500 text-[13px] leading-relaxed space-y-1">
+              {product.material && (
+                <li>
+                  <span className="font-bold text-preto uppercase text-[11px]">
+                    Material:
+                  </span>{" "}
+                  {product.material}
+                </li>
+              )}
+              {product.terreno && (
+                <li>
+                  <span className="font-bold text-preto uppercase text-[11px]">
+                    Terreno Ideal:
+                  </span>{" "}
+                  {product.terreno}
+                </li>
+              )}
+              {product.marca && (
+                <li>
+                  <span className="font-bold text-preto uppercase text-[11px]">
+                    Marca:
+                  </span>{" "}
+                  {product.marca}
+                </li>
+              )}
+              <li>
+                <span className="font-bold text-preto uppercase text-[11px]">
+                  Tipo:
+                </span>{" "}
+                {product.tipo || "Coturno Tático"}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 3. Devolução do Produto */}
+        <div className="border-b border-gray-100 py-3.5">
+          <button
+            onClick={() => setIsReturnOpen(!isReturnOpen)}
+            className="w-full flex items-center justify-between text-[13px] font-bold uppercase tracking-widest text-preto group cursor-pointer"
+          >
+            Devolução do Produto
+            <ChevronRight
+              size={16}
+              className={`transition-transform duration-300 ${isReturnOpen ? "rotate-90" : ""}`}
+            />
+          </button>
+          <div
+            className={`overflow-hidden transition-all duration-300 ${isReturnOpen ? "max-h-40 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
+          >
+            <p className="text-gray-500 text-[13px] leading-relaxed">
+              Nossa política de devolução é simples e rápida. Você tem até
+              <span className="text-preto font-bold"> 7 dias corridos </span>
+              após o recebimento para solicitar a devolução gratuita. O produto
+              deve estar em sua embalagem original e sem sinais de uso.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

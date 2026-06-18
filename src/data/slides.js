@@ -1,7 +1,7 @@
 export const slides = [
   {
     id: 1,
-    mobileImage: "/exemplo vans.png", // Imagem de exemplo vertical
+    mobileImage: "/Banner1.png",
     desktopImage: "/Banner1.png",
     link: "/produtos",
   },

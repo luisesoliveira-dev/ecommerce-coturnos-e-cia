@@ -4,10 +4,10 @@ import { ColecaoDestaqueBanner } from "./ColecaoDestaqueBanner";
 import { CardProduto } from "../ui/CardProduto";
 import { HorizontalDragScroll } from "../ui/HorizontalDragScroll";
 
-export function ColecaoDestaque({ 
-  title = "O Clássico Reimaginado", 
-  banner, 
-  items = [] 
+export function ColecaoDestaque({
+  title = "O Clássico Reimaginado",
+  banner,
+  items = [],
 }) {
   const [page, setPage] = useState(0);
 
@@ -86,10 +86,7 @@ export function ColecaoDestaque({
         <div className="lg:hidden flex flex-col gap-2">
           <div className="w-full aspect-16/9.5 overflow-hidden sm:w-[calc(100%+16px)]">
             {banner && (
-              <ColecaoDestaqueBanner
-                image={banner.image}
-                alt={banner.alt}
-              />
+              <ColecaoDestaqueBanner image={banner.image} alt={banner.alt} />
             )}
           </div>
           <HorizontalDragScroll className="gap-2 pb-2">
@@ -122,10 +119,7 @@ export function ColecaoDestaque({
         <div className="hidden lg:flex gap-3 items-start">
           <div className="w-[46%] shrink-0 lg:aspect-[17/11.26] xl:aspect-[17/11.33] overflow-hidden">
             {banner && (
-              <ColecaoDestaqueBanner
-                image={banner.image}
-                alt={banner.alt}
-              />
+              <ColecaoDestaqueBanner image={banner.image} alt={banner.alt} />
             )}
           </div>
           <HorizontalDragScroll

@@ -56,6 +56,51 @@
   animation: fadeUp 0.25s ease-out forwards;
 }
 
+/* Range Slider Styles */
+.range-slider-input {
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  outline: none;
+  background: transparent;
+  margin: 0;
+}
+
+.range-slider-input::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+  pointer-events: all;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+.range-slider-input::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+.range-slider-input::-moz-range-thumb {
+  appearance: none;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+  pointer-events: all;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
 /* Regras globais de cursor para elementos interativos */
 @layer base {
   button,

@@ -5,10 +5,20 @@ import { menuItems, linksNavbar } from "../../data/menu";
 import logo from "../../assets/logo1.png";
 import { NavDropdown } from "./NavDropdown";
 import { MobileMenu } from "./MobileMenu";
+import { CartDrawer } from "./CartDrawer";
+import { useCart } from "../../context/useCart";
 
-export function Navbar() {
+export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState(null);
+  const { cartItems } = useCart();
+
+  // Se forcedCartOpen for passado (via página de detalhes), usa ele. Caso contrário, usa o estado local.
+  const currentCartOpen =
+    forcedCartOpen !== undefined ? forcedCartOpen : isCartOpen;
+  const setCurrentCartOpen =
+    setForcedCartOpen !== undefined ? setForcedCartOpen : setIsCartOpen;
 
   // Função para fechar o menu e resetar a navegação mobile
   const closeMenu = () => {
@@ -75,11 +85,16 @@ export function Navbar() {
                 <User size={22} />
               </Link>
 
-              <button className="text-army hover:text-gold transition-colors p-1 relative cursor-pointer">
+              <button
+                className="text-army hover:text-gold transition-colors p-1 relative cursor-pointer"
+                onClick={() => setCurrentCartOpen(true)}
+              >
                 <ShoppingCart size={22} />
-                <span className="absolute -top-1 -right-1 bg-gold text-branco text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                  0
-                </span>
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-gold text-branco text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                  </span>
+                )}
               </button>
 
               <button
@@ -100,6 +115,12 @@ export function Navbar() {
         menuItems={menuItems}
         activeMobileMenu={activeMobileMenu}
         onSetActiveMenu={setActiveMobileMenu}
+      />
+
+      {/* CARRINHO LATERAL (DRAWER) */}
+      <CartDrawer
+        isOpen={currentCartOpen}
+        onClose={() => setCurrentCartOpen(false)}
       />
     </>
   );

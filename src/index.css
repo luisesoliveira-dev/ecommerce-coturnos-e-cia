@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-barlow: "Barlow Condensed", sans-serif;
+  --color-army: #4a5c3a;
+  --color-gold: #c2a385;
+  --color-preto: #121212;
+  --color-branco: #ffffff;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2d3823; /* Verde Army mais escuro para destaque */
+  border-radius: 10px;
+  border: 2px solid #f1f1f1; /* Cria um respiro para a barra não parecer colada */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #121212;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}

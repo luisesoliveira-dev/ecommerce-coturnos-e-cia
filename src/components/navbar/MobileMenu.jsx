@@ -1,6 +1,7 @@
 import { X, ChevronRight, ChevronLeft, User, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo1.png";
+import { useScrollLock } from "../../hooks/useScrollLock";
 
 export function MobileMenu({
   isOpen,
@@ -9,6 +10,9 @@ export function MobileMenu({
   activeMobileMenu,
   onSetActiveMenu,
 }) {
+  // Trava o scroll do body quando o menu mobile está aberto
+  useScrollLock(isOpen);
+
   const activeCategory = menuItems.find(
     (item) => item.title === activeMobileMenu,
   );

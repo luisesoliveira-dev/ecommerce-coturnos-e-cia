@@ -165,6 +165,15 @@ export const HorizontalDragScroll = forwardRef(function HorizontalDragScroll(
   const onMouseUp = useCallback((e) => finishDrag(e), [finishDrag]);
   const onMouseLeave = useCallback(() => finishDrag(null), [finishDrag]);
 
+  // Bloqueia cliques se houve arrasto
+  const onClickCapture = useCallback((e) => {
+    if (didDrag.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      didDrag.current = false;
+    }
+  }, []);
+
   return (
     <div
       ref={scrollRef}
@@ -177,6 +186,7 @@ export const HorizontalDragScroll = forwardRef(function HorizontalDragScroll(
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseLeave}
+      onClickCapture={onClickCapture}
     >
       {children(cardRefs)}
     </div>
