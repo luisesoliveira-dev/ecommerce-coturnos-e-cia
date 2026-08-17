@@ -2,6 +2,8 @@
 
 Este é um projeto de e-commerce moderno e responsivo focado na venda de coturnos e calçados táticos. Desenvolvido com as tecnologias mais recentes do ecossistema React, o projeto oferece uma experiência de usuário fluida, com filtros avançados e uma interface intuitiva.
 
+##Url Desenvolvimento: https://ecommerce-coturnos-e-cia.vercel.app/
+
 ## 🚀 Sobre o Projeto
 
 O **Coturnos & Cia** foi construído para servir como uma plataforma robusta de vendas online. Ele conta com uma página inicial dinâmica, listagem de produtos com filtros em tempo real e uma área de autenticação (Login/Cadastro).
