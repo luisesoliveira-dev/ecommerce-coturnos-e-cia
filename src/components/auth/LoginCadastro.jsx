@@ -29,6 +29,12 @@ function mascaraData(v) {
   return v;
 }
 
+function mascaraCEP(v) {
+  v = v.replace(/\D/g, "").slice(0, 8);
+  if (v.length > 5) return v.replace(/(\d{5})(\d{0,3})/, "$1-$2");
+  return v;
+}
+
 // ---------- validações ----------
 function validarEmail(email) {
   return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -44,6 +50,10 @@ function validarCPF(cpf) {
 
 function validarCelular(cel) {
   return cel.replace(/\D/g, "").length === 11;
+}
+
+function validarCEP(cep) {
+  return cep.replace(/\D/g, "").length === 8;
 }
 
 function validarData(data) {
@@ -76,6 +86,13 @@ export function LoginCadastro() {
     celular: "",
     email: "",
     nascimento: "",
+    cep: "",
+    logradouro: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
     senha: "",
     confirmaSenha: "",
     termos: false,
@@ -113,6 +130,7 @@ export function LoginCadastro() {
     if (campo === "cpf") valorFinal = mascaraCPF(valor);
     if (campo === "celular") valorFinal = mascaraCelular(valor);
     if (campo === "nascimento") valorFinal = mascaraData(valor);
+    if (campo === "cep") valorFinal = mascaraCEP(valor);
 
     setCadastroForm((prev) => ({ ...prev, [campo]: valorFinal }));
     if (cadastroErros[campo])
@@ -138,6 +156,16 @@ export function LoginCadastro() {
     if (!f.nascimento) erros.nascimento = "Informe sua data de nascimento.";
     else if (!validarData(f.nascimento))
       erros.nascimento = "Data inválida ou idade não permitida.";
+
+    // Validações de Endereço de Entrega
+    if (!f.cep) erros.cep = "Informe o CEP.";
+    else if (!validarCEP(f.cep)) erros.cep = "CEP incompleto.";
+
+    if (!f.logradouro.trim()) erros.logradouro = "Informe o logradouro.";
+    if (!f.numero.trim()) erros.numero = "Informe o número.";
+    if (!f.bairro.trim()) erros.bairro = "Informe o bairro.";
+    if (!f.cidade.trim()) erros.cidade = "Informe a cidade.";
+    if (!f.estado.trim()) erros.estado = "Informe o estado.";
 
     if (!f.senha) erros.senha = "Crie uma senha.";
     else if (!validarSenha(f.senha))
@@ -299,6 +327,69 @@ export function LoginCadastro() {
                 error={cadastroErros.nascimento}
                 inputMode="numeric"
               />
+
+              {/* CAMPOS DE ENDEREÇO PARA ENTREGA */}
+              <InputCampo
+                label="CEP"
+                required
+                value={cadastroForm.cep}
+                onChange={(e) => handleCadastroChange("cep", e.target.value)}
+                error={cadastroErros.cep}
+                inputMode="numeric"
+              />
+              <InputCampo
+                label="Logradouro (Rua, Av., etc.)"
+                required
+                value={cadastroForm.logradouro}
+                onChange={(e) => handleCadastroChange("logradouro", e.target.value)}
+                error={cadastroErros.logradouro}
+              />
+              <div className="flex gap-4">
+                <div className="w-1/3">
+                  <InputCampo
+                    label="Número"
+                    required
+                    value={cadastroForm.numero}
+                    onChange={(e) => handleCadastroChange("numero", e.target.value)}
+                    error={cadastroErros.numero}
+                  />
+                </div>
+                <div className="w-2/3">
+                  <InputCampo
+                    label="Complemento"
+                    value={cadastroForm.complemento}
+                    onChange={(e) => handleCadastroChange("complemento", e.target.value)}
+                    error={cadastroErros.complemento}
+                  />
+                </div>
+              </div>
+              <InputCampo
+                label="Bairro"
+                required
+                value={cadastroForm.bairro}
+                onChange={(e) => handleCadastroChange("bairro", e.target.value)}
+                error={cadastroErros.bairro}
+              />
+              <div className="flex gap-4">
+                <div className="w-2/3">
+                  <InputCampo
+                    label="Cidade"
+                    required
+                    value={cadastroForm.cidade}
+                    onChange={(e) => handleCadastroChange("cidade", e.target.value)}
+                    error={cadastroErros.cidade}
+                  />
+                </div>
+                <div className="w-1/3">
+                  <InputCampo
+                    label="Estado"
+                    required
+                    value={cadastroForm.estado}
+                    onChange={(e) => handleCadastroChange("estado", e.target.value)}
+                    error={cadastroErros.estado}
+                  />
+                </div>
+              </div>
 
               <InputSenha
                 label="Senha"
