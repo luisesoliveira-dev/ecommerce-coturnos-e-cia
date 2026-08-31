@@ -123,14 +123,47 @@ export function LoginCadastro() {
     console.log("Login enviado:", loginForm); // TODO: chamar API
   }
 
+  // ---------- VIA CEP ----------
+  async function buscarCEP(cepInformado) {
+    const cepLimpo = cepInformado.replace(/\D/g, "");
+    if (cepLimpo.length !== 8) return;
+
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        setCadastroErros((prev) => ({ ...prev, cep: "CEP não encontrado." }));
+        return;
+      }
+
+      setCadastroForm((prev) => ({
+        ...prev,
+        logradouro: data.logradouro || "",
+        bairro: data.bairro || "",
+        cidade: data.localidade || "",
+        estado: data.uf || "",
+      }));
+
+      // Limpa erro de CEP caso estivesse preenchido incorretamente antes
+      setCadastroErros((prev) => ({ ...prev, cep: "", logradouro: "", bairro: "", cidade: "", estado: "" }));
+    } catch (error) {
+      console.error("Erro ao buscar CEP:", error);
+    }
+  }
+
   // ---------- CADASTRO ----------
   function handleCadastroChange(campo, valor) {
-    // aplica máscara conforme o campo
     let valorFinal = valor;
     if (campo === "cpf") valorFinal = mascaraCPF(valor);
     if (campo === "celular") valorFinal = mascaraCelular(valor);
     if (campo === "nascimento") valorFinal = mascaraData(valor);
-    if (campo === "cep") valorFinal = mascaraCEP(valor);
+    if (campo === "cep") {
+      valorFinal = mascaraCEP(valor);
+      if (valorFinal.replace(/\D/g, "").length === 8) {
+        buscarCEP(valorFinal);
+      }
+    }
 
     setCadastroForm((prev) => ({ ...prev, [campo]: valorFinal }));
     if (cadastroErros[campo])
