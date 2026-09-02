@@ -8,17 +8,10 @@ import { MobileMenu } from "./MobileMenu";
 import { CartDrawer } from "./CartDrawer";
 import { useCart } from "../../context/useCart";
 
-export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
+export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState(null);
-  const { cartItems } = useCart();
-
-  // Se forcedCartOpen for passado (via página de detalhes), usa ele. Caso contrário, usa o estado local.
-  const currentCartOpen =
-    forcedCartOpen !== undefined ? forcedCartOpen : isCartOpen;
-  const setCurrentCartOpen =
-    setForcedCartOpen !== undefined ? setForcedCartOpen : setIsCartOpen;
+  const { cartItems, isCartOpen, openCart, closeCart } = useCart();
 
   // Função para fechar o menu e resetar a navegação mobile
   const closeMenu = () => {
@@ -87,7 +80,7 @@ export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
 
               <button
                 className="text-army hover:text-gold transition-colors p-1 relative cursor-pointer"
-                onClick={() => setCurrentCartOpen(true)}
+                onClick={openCart}
               >
                 <ShoppingCart size={22} />
                 {cartItems.length > 0 && (
@@ -118,10 +111,7 @@ export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
       />
 
       {/* CARRINHO LATERAL (DRAWER) */}
-      <CartDrawer
-        isOpen={currentCartOpen}
-        onClose={() => setCurrentCartOpen(false)}
-      />
+      <CartDrawer isOpen={isCartOpen} onClose={() => closeCart} />
     </>
   );
 }

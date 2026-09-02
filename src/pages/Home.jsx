@@ -4,8 +4,6 @@ import { HeroCarousel } from "../components/home/HeroCarousel";
 import { ColecaoBanner } from "../components/home/ColecaoBanner";
 import { SizeFilter } from "../components/home/SizeFilter";
 import { VitrineProdutos } from "../components/home/VitrineProdutos";
-import { Footer } from "../components/footer/Footer";
-import { Navbar } from "../components/navbar/Navbar";
 import { AnnouncementBar } from "../components/home/AnnouncementBar";
 import { ColecaoDestaque } from "../components/home/ColecaoDestaque";
 import { NewsletterSection } from "../components/sections/NewsletterSection";
@@ -18,8 +16,6 @@ import { promoSlides } from "../data/promoSlides";
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-preto font-barlow">
-      <Navbar />
-
       <AnnouncementBar />
 
       {/* 1. Carrossel Principal */}
@@ -29,7 +25,7 @@ export default function Home() {
       <SizeFilter />
 
       {/* 3. Destaque Estilo Vans (Curadoria com setinhas e animação) */}
-      <ColecaoDestaque 
+      <ColecaoDestaque
         title="O Clássico Reimaginado"
         banner={colecaoBanner}
         items={colecaoItens}
@@ -38,12 +34,12 @@ export default function Home() {
       {/* 4. Grade de Categorias Dinâmica */}
       <VitrineProdutos />
 
-      <ColecaoDestaque 
+      <ColecaoDestaque
         title="Nossa Linha Elite"
         banner={colecaoBanner}
         items={colecaoItens}
       />
-      
+
       {/* 5. Banners de Coleções Finais (Com espaçamento no celular) */}
       <ColecaoBanner />
 
@@ -51,8 +47,6 @@ export default function Home() {
       <SecondaryCarousel slides={promoSlides} />
 
       <NewsletterSection />
-
-      <Footer />
     </main>
   );
 }

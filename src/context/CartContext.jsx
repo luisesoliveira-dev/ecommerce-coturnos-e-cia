@@ -7,6 +7,11 @@ export function CartProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -46,6 +51,7 @@ export function CartProvider({ children }) {
         },
       ];
     });
+    openCart(); // Abre o carrinho automaticamente ao adicionar um item
   };
 
   const updateQuantity = (cartKey, delta) => {
@@ -78,6 +84,9 @@ export function CartProvider({ children }) {
         updateQuantity,
         removeFromCart,
         clearCart,
+        isCartOpen,
+        openCart,
+        closeCart,
       }}
     >
       {children}

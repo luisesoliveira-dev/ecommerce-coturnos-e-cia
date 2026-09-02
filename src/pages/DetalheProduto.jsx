@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Navbar } from "../components/navbar/Navbar";
-import { Footer } from "../components/footer/Footer";
 import { Breadcrumb } from "../components/product/Breadcrumb";
 import { ProductView } from "../components/product/ProductView";
 import { NewsletterSection } from "../components/sections/NewsletterSection";
 import { produtos } from "../data/produtos";
 import { productMock } from "../data/productDetail";
+import { useCart } from "../context/useCart";
 
 export default function DetalheProduto() {
   const { id } = useParams();
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { addToCart } = useCart();
 
   // No mundo real, você usaria o ID para buscar na API.
   // Aqui, vamos mesclar os dados fixos do mock com o produto encontrado na lista.
@@ -24,7 +23,6 @@ export default function DetalheProduto() {
   if (!productFound) {
     return (
       <main className="min-h-screen bg-white font-barlow">
-        <Navbar />
         <div className="max-w-390 mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-black uppercase tracking-tighter">
             Produto não encontrado
@@ -39,7 +37,6 @@ export default function DetalheProduto() {
             Voltar para a Loja
           </Link>
         </div>
-        <Footer />
       </main>
     );
   }
@@ -52,18 +49,13 @@ export default function DetalheProduto() {
 
   return (
     <main className="min-h-screen bg-white font-barlow">
-      <Navbar forcedCartOpen={isCartOpen} setForcedCartOpen={setIsCartOpen} />
+      {/* <Navbar forcedCartOpen={isCartOpen} setForcedCartOpen={setIsCartOpen} /> */}
 
       <Breadcrumb productName={productData.name} />
 
-      <ProductView
-        product={productData}
-        onOpenCart={() => setIsCartOpen(true)}
-      />
+      <ProductView product={productData} onAddToCart={addToCart} />
 
       <NewsletterSection />
-
-      <Footer />
     </main>
   );
 }

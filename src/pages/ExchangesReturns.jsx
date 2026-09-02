@@ -1,11 +1,6 @@
-import { Navbar } from "../components/navbar/Navbar";
-import { Footer } from "../components/footer/Footer";
-
 export default function ExchangeReturns() {
-    return ( 
-         <main className="min-h-screen bg-white text-preto font-barlow">
-      <Navbar />
-
+  return (
+    <main className="min-h-screen bg-white text-preto font-barlow">
       <section className="w-full py-12 sm:py-16 lg:py-20">
         <div className="max-w-390 mx-auto w-full px-4 sm:px-8">
           <article className="max-w-4xl mx-auto">
@@ -26,8 +21,8 @@ export default function ExchangeReturns() {
                 </h2>
 
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Consulte as condições estabelecidas pela Coturnos &
-                  Cia para realizar a troca de um produto adquirido.
+                  Consulte as condições estabelecidas pela Coturnos & Cia para
+                  realizar a troca de um produto adquirido.
                 </p>
               </section>
 
@@ -37,8 +32,8 @@ export default function ExchangeReturns() {
                 </h2>
 
                 <p className="text-base sm:text-lg leading-relaxed">
-                  As solicitações de devolução devem seguir as condições
-                  e os prazos definidos pela loja.
+                  As solicitações de devolução devem seguir as condições e os
+                  prazos definidos pela loja.
                 </p>
               </section>
 
@@ -48,17 +43,15 @@ export default function ExchangeReturns() {
                 </h2>
 
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Para informações detalhadas sobre prazos, condições
-                  do produto e procedimentos, entre em contato com a
-                  nossa Central de Ajuda.
+                  Para informações detalhadas sobre prazos, condições do produto
+                  e procedimentos, entre em contato com a nossa Central de
+                  Ajuda.
                 </p>
               </section>
             </div>
           </article>
         </div>
       </section>
-
-      <Footer />
     </main>
-     );
+  );
 }
