@@ -8,17 +8,10 @@ import { MobileMenu } from "./MobileMenu";
 import { CartDrawer } from "./CartDrawer";
 import { useCart } from "../../context/useCart";
 
-export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
+export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState(null);
-  const { cartItems } = useCart();
-
-  // Se forcedCartOpen for passado (via página de detalhes), usa ele. Caso contrário, usa o estado local.
-  const currentCartOpen =
-    forcedCartOpen !== undefined ? forcedCartOpen : isCartOpen;
-  const setCurrentCartOpen =
-    setForcedCartOpen !== undefined ? setForcedCartOpen : setIsCartOpen;
+  const { cartItems, isCartOpen, openCart, closeCart } = useCart();
 
   // Função para fechar o menu e resetar a navegação mobile
   const closeMenu = () => {
@@ -49,12 +42,12 @@ export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
               ))}
 
               {linksNavbar.map((link) => (
-                <li key={link} className="flex items-center h-full">
+                <li key={link.label} className="flex items-center h-full">
                   <a
-                    href="#"
+                    href={link.href}
                     className="relative text-army text-sm font-semibold uppercase tracking-[1.5px] hover:text-gold transition-colors after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
@@ -87,7 +80,7 @@ export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
 
               <button
                 className="text-army hover:text-gold transition-colors p-1 relative cursor-pointer"
-                onClick={() => setCurrentCartOpen(true)}
+                onClick={openCart}
               >
                 <ShoppingCart size={22} />
                 {cartItems.length > 0 && (
@@ -118,10 +111,7 @@ export function Navbar({ forcedCartOpen, setForcedCartOpen }) {
       />
 
       {/* CARRINHO LATERAL (DRAWER) */}
-      <CartDrawer
-        isOpen={currentCartOpen}
-        onClose={() => setCurrentCartOpen(false)}
-      />
+      <CartDrawer isOpen={isCartOpen} onClose={() => closeCart} />
     </>
   );
 }

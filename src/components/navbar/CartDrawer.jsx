@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/useCart";
 import { useScrollLock } from "../../hooks/useScrollLock";
 
-export function CartDrawer({ isOpen, onClose }) {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+export function CartDrawer() {
+  // Puxando o estado e as funções diretamente do contexto global
+  const { cartItems, updateQuantity, removeFromCart, isCartOpen, closeCart } =
+    useCart();
   const navigate = useNavigate();
 
   // Trava o scroll do body quando o carrinho está aberto
-  useScrollLock(isOpen);
+  useScrollLock(isCartOpen);
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -17,20 +19,20 @@ export function CartDrawer({ isOpen, onClose }) {
   );
 
   const handleCheckout = () => {
-    onClose();
+    closeCart();
     navigate("/checkout");
   };
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isCartOpen && (
         <>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={closeCart}
             className="fixed inset-0 bg-black/40 z-100 backdrop-blur-sm"
           />
 
@@ -54,7 +56,7 @@ export function CartDrawer({ isOpen, onClose }) {
                 </h2>
               </div>
               <button
-                onClick={onClose}
+                onClick={closeCart}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
               >
                 <X size={24} className="text-preto" />
@@ -76,7 +78,7 @@ export function CartDrawer({ isOpen, onClose }) {
                     próxima missão.
                   </p>
                   <button
-                    onClick={onClose}
+                    onClick={closeCart}
                     className="mt-10 bg-army text-white px-10 py-4 font-black uppercase tracking-[0.2em] text-xs hover:bg-preto transition-colors shadow-lg cursor-pointer"
                   >
                     Continuar Comprando
@@ -182,7 +184,7 @@ export function CartDrawer({ isOpen, onClose }) {
                     Finalizar Compra
                   </button>
                   <button
-                    onClick={onClose}
+                    onClick={closeCart}
                     className="w-full bg-preto text-white py-5 font-black uppercase tracking-[0.2em] text-[12px] sm:text-sm hover:bg-army transition-colors shadow-lg cursor-pointer"
                   >
                     Continuar Comprando

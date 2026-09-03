@@ -1,11 +1,13 @@
+import { ROUTES } from "../constants/routes";
+
 export const menuItems = [
   {
     title: "Coturnos e Sapatos",
     links: [
-      { label: "Coturnos Militares", href: "/produtos" },
-      { label: "Botas de Trilha", href: "/produtos" },
-      { label: "Sapatos Sociais", href: "/produtos" },
-      { label: "Linha Tática", href: "/produtos" },
+      { label: "Coturnos Militares", href: ROUTES.PRODUTOS },
+      { label: "Botas de Trilha", href: ROUTES.PRODUTOS },
+      { label: "Sapatos Sociais", href: ROUTES.PRODUTOS },
+      { label: "Linha Tática", href: ROUTES.PRODUTOS },
     ],
   },
   {
@@ -19,4 +21,7 @@ export const menuItems = [
   },
 ];
 
-export const linksNavbar = ["Lançamentos", "Contato"];
+export const linksNavbar = [
+  { label: "Lançamentos", href: ROUTES.LANCAMENTOS },
+  { label: "Contato", href: ROUTES.CONTATO },
+];
