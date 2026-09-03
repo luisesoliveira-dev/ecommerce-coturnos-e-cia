@@ -7,6 +7,7 @@ export function FilterDrawerMobile({
   filters,
   onChange,
   onClear,
+  products,
 }) {
   // Trava scroll do body quando aberto
   useEffect(() => {
@@ -63,6 +64,7 @@ export function FilterDrawerMobile({
         {/* Conteúdo com scroll */}
         <div className="flex-1 overflow-y-auto px-5 py-2">
           <FilterSidebar
+            products={products}
             filters={filters}
             onChange={onChange}
             onClear={onClear}

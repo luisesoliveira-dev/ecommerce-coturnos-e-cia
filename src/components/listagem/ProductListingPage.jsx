@@ -209,10 +209,10 @@ export function ProductListingPage({
       <FilterDrawerMobile
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        products={initialProducts}
         filters={filters}
         onChange={setFilters}
         onClear={handleClear}
+        products={allProducts}
       />
     </div>
   );

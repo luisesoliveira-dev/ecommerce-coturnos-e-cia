@@ -42,12 +42,12 @@ export function Navbar() {
               ))}
 
               {linksNavbar.map((link) => (
-                <li key={link} className="flex items-center h-full">
+                <li key={link.label} className="flex items-center h-full">
                   <a
-                    href="#"
+                    href={link.href}
                     className="relative text-army text-sm font-semibold uppercase tracking-[1.5px] hover:text-gold transition-colors after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
