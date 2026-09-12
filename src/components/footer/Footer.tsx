@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import logo from "../../assets/logo1.png";
+import { ROUTES } from "../../constants/routes";
 
 const SOCIAL = [
   { Icon: InstagramIcon, label: "Instagram", href: "#" },
@@ -115,7 +116,7 @@ export function Footer() {
             {/* Links Institucionais */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-12">
               <FooterSection title="Institucional">
-                <FooterLink href="sobre-nos">Quem Somos</FooterLink>
+                <FooterLink href={ROUTES.SOBRE_NOS}>Quem Somos</FooterLink>
                 <FooterLink href="#">Lojas Físicas</FooterLink>
                 <FooterLink href="#">Blog Tático</FooterLink>
                 <FooterLink href="#">Trabalhe Conosco</FooterLink>
@@ -123,16 +124,14 @@ export function Footer() {
               </FooterSection>
 
               <FooterSection title="Atendimento">
-                <FooterLink href="central-de-ajuda">
+                <FooterLink href={ROUTES.CENTRAL_AJUDA}>
                   Central de Ajuda
                 </FooterLink>
-                <FooterLink href="#">Meus Pedidos</FooterLink>
-                <FooterLink href="trocas-e-devolucoes">
-                  Trocas e Devoluções
-                </FooterLink>
+                <FooterLink href={ROUTES.MEUS_PEDIDOS}>Meus Pedidos</FooterLink>
+                <FooterLink href="#">Trocas e Devoluções</FooterLink>
                 <FooterLink href="#">Política de Frete</FooterLink>
                 <FooterLink href="#">Garantia do Produto</FooterLink>
-                <FooterLink href="faq">Perguntas Frequentes</FooterLink>
+                <FooterLink href={ROUTES.FAQ}>Perguntas Frequentes</FooterLink>
               </FooterSection>
             </div>
 

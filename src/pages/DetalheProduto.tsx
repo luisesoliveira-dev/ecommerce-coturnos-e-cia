@@ -25,7 +25,6 @@ export default function DetalheProduto() {
   if (!productFound) {
     return (
       <main className="min-h-screen bg-white font-barlow">
-        <Navbar />
         <div className="max-w-390 mx-auto px-4 py-20 text-center">
           <h1 className="text-3xl font-black uppercase tracking-tighter">
             Produto não encontrado
@@ -40,7 +39,6 @@ export default function DetalheProduto() {
             Voltar para a Loja
           </Link>
         </div>
-        <Footer />
       </main>
     );
   }

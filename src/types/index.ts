@@ -74,6 +74,11 @@ export interface MenuItem {
   links: { label: string; href: string }[];
 }
 
+export interface NavbarLink {
+  label: string;
+  href: string;
+}
+
 export interface ProductFilters {
   tipos: string[];
   destaques: string[];

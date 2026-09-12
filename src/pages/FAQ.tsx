@@ -6,11 +6,9 @@ import { faqItems } from "../data/help";
 export default function FAQ() {
   return (
     <main className="min-h-screen bg-white text-preto font-barlow">
-      <Navbar />
-
       <section className="w-full py-12 sm:py-16 lg:py-20">
         <div className="max-w-390 mx-auto w-full px-4 sm:px-8">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="mb-8 sm:mb-10">
               <p className="text-sm font-bold uppercase tracking-wider text-army mb-2">
                 Central de Ajuda
@@ -30,8 +28,6 @@ export default function FAQ() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }
