@@ -4,7 +4,33 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.0.1] - 2026-09-12
+
+### Alterado 
+
+
 ## [2.0.0] - 2026-09-08
+
+- **Estrutura de Layout (`src/components/layout/`)**:
+  - Criação de componentes compartilhados para centralizar a estrutura visual das páginas.
+  - Reorganização da composição do layout para separar elementos globais da aplicação.
+- **Constantes da Aplicação (`src/constants/`)**:
+  - Criação da camada de constantes para centralizar valores e configurações reutilizados pela aplicação.
+  - Redução de valores fixos distribuídos entre os componentes.
+- **Navegação e Menu**:
+  - Atualização do Navbar.tsx e Footer.tsx para adequação à nova estrutura de layout.
+  - Refatoração de menu.ts com tipagem utilizando as interfaces centralizadas em src/types/.
+- **Páginas da Aplicação**: 
+  - Atualização das páginas Home.tsx, ListagemProdutos.tsx, DetalheProduto.tsx, LogineCadastro.tsx, 
+  - AboutUs.tsx, ExchangesReturns.tsx, FAQ.tsx e HelpCenter.tsx para adequação à arquitetura TypeScript.
+  - Ajustes de integração com a nova estrutura de componentes e constantes, mantendo o layout existente.
+- **Página Institucional "Sobre Nós":**
+  - Inclusão de imagem institucional em public/about_us.png.
+  - Ajuste da estrutura da página para exibição da imagem abaixo do conteúdo institucional.
+- **Aplicação (src/App.tsx):**
+  - Atualização da composição principal da aplicação para integração da nova estrutura de layout.
+- **Tipagem (src/types/index.ts):**
+  - Atualização das interfaces e contratos utilizados pelas páginas e componentes durante a continuidade da migração para TypeScript.
 
 ### Alterado
 
