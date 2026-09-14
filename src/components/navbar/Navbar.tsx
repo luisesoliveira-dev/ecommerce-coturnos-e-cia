@@ -78,14 +78,14 @@ export function Navbar() {
                 <NavDropdown key={item.title} item={item} />
               ))}
 
-              {linksNavbar.map((link: string) => (
-                <li key={link} className="flex items-center h-full">
-                  <a
-                    href="#"
+              {linksNavbar.map((link) => (
+                <li key={link.label} className="flex items-center h-full">
+                  <Link
+                    to={link.href}
                     className="relative text-army text-[15px] font-bold uppercase tracking-[1.5px] hover:text-gold transition-colors after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

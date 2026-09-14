@@ -1,4 +1,4 @@
-import { MenuItem } from "../types";
+import { MenuItem, NavbarLink } from "../types";
 
 export const menuItems: MenuItem[] = [
   {
@@ -21,4 +21,13 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
-export const linksNavbar: string[] = ["Lançamentos", "Contato"];
+export const linksNavbar: NavbarLink[] = [
+  {
+    label: "Lançamentos",
+    href: "/lancamentos",
+  },
+  {
+    label: "Contato",
+    href: "/contato",
+  },
+];
