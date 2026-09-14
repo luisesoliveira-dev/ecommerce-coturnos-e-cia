@@ -72,6 +72,10 @@ export function CartProvider({ children }: CartProviderProps) {
 
   const clearCart = () => setCartItems([]);
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
   return (
     <CartContext.Provider
       value={{
@@ -80,6 +84,10 @@ export function CartProvider({ children }: CartProviderProps) {
         updateQuantity,
         removeFromCart,
         clearCart,
+        isCartOpen,
+        setIsCartOpen,
+        openCart,
+        closeCart,
       }}
     >
       {children}

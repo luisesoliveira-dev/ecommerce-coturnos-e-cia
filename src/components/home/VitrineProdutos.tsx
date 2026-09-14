@@ -57,7 +57,7 @@ export const VitrineProdutos = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={[
-                "relative px-1.5 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 text-[11px] sm:text-sm lg:text-base font-bold uppercase tracking-widest sm:tracking-[0.12em]",
+                "relative px-1.5 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-widest sm:tracking-[0.12em]",
                 "border transition-all duration-150 cursor-pointer select-none whitespace-nowrap",
                 isActive
                   ? "bg-black text-white border-black"

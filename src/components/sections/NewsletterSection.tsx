@@ -18,7 +18,7 @@ export function NewsletterSection() {
           <div className="flex flex-col lg:flex-row items-left justify-between gap-6 lg:gap-16">
             {/* TEXTO */}
             <div className="text-left">
-              <h2 className="text-[15px] sm:text-xl md:text-2xl font-black uppercase text-preto tracking-tight leading-tight">
+              <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase text-preto tracking-normal leading-tight">
                 Inscreva-se na nossa{" "}
                 <span className="border-b-3 border-gold">Newsletter</span>
               </h2>
@@ -51,7 +51,7 @@ export function NewsletterSection() {
           </div>
         ) : (
           <div className="text-center py-2">
-            <p className="text-preto font-black uppercase tracking-tight text-lg">
+            <p className="text-preto font-black uppercase tracking-normal text-lg">
               Você está no radar!
             </p>
             <p className="text-gray-500 text-sm mt-1">

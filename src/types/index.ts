@@ -34,6 +34,10 @@ export interface CartContextType {
   updateQuantity: (cartKey: string, delta: number) => void;
   removeFromCart: (cartKey: string) => void;
   clearCart: () => void;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 export interface ColecaoItem {
@@ -72,6 +76,11 @@ export interface ProductDetail {
 export interface MenuItem {
   title: string;
   links: { label: string; href: string }[];
+}
+
+export interface NavbarLink {
+  label: string;
+  href: string;
 }
 
 export interface ProductFilters {

@@ -9,6 +9,7 @@
   --color-preto: #000000;
   --color-pretoclaro: #121212;
   --font-barlow: "Barlow Condensed", sans-serif;
+  --font-body: "Barlow", sans-serif;
 }
 
 @keyframes slideInNext {
@@ -79,7 +80,7 @@
   width: 18px;
   pointer-events: all;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.1s ease;
   cursor: pointer;
 }
@@ -97,12 +98,16 @@
   width: 18px;
   pointer-events: all;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
 /* Regras globais de cursor para elementos interativos */
 @layer base {
+  body {
+    font-family: var(--font-body), sans-serif;
+  }
+
   button,
   label,
   select,
@@ -113,4 +118,33 @@
   input[type="radio"] {
     cursor: pointer;
   }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2d3823;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #121212;
+}
+
+/* Ocultar barra de rolagem mantendo a funcionalidade de scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

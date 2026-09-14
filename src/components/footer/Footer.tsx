@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import logo from "../../assets/logo1.png";
+import { ROUTES } from "../../constants/routes";
 
 const SOCIAL = [
   { Icon: InstagramIcon, label: "Instagram", href: "#" },
@@ -51,7 +52,7 @@ export function Footer() {
                 className="h-16 w-auto object-contain mb-4"
                 style={{ filter: "brightness(1.1) contrast(1.05)" }}
               />
-              <p className="text-gray-400 text-[15px] leading-relaxed">
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
                 Equipamentos táticos e calçados de alta performance para quem
                 exige o máximo em resistência e durabilidade.
               </p>
@@ -72,7 +73,7 @@ export function Footer() {
                     className="text-army group-hover:text-gold"
                   />
                 </div>
-                <span className="text-[15px]">(11) 99999-9999</span>
+                <span className="text-sm sm:text-base">(11) 99999-9999</span>
               </a>
               <a
                 href="mailto:contato@coturnosecia.com.br"
@@ -81,13 +82,15 @@ export function Footer() {
                 <div className="w-8 h-8 flex items-center justify-center rounded bg-army/10 border border-army/20 group-hover:border-gold/40 transition-colors shrink-0">
                   <Mail size={14} className="text-army group-hover:text-gold" />
                 </div>
-                <span className="text-[15px]">contato@coturnosecia.com.br</span>
+                <span className="text-sm sm:text-base">
+                  contato@coturnosecia.com.br
+                </span>
               </a>
               <div className="flex items-start gap-3 text-gray-500">
                 <div className="w-8 h-8 flex items-center justify-center rounded bg-army/10 border border-army/20 shrink-0 mt-0.5">
                   <MapPin size={14} className="text-army" />
                 </div>
-                <span className="text-[15px] leading-snug mt-1.5">
+                <span className="text-sm sm:text-base leading-snug mt-1.5">
                   Rua dos Táticos, 123 — Centro
                   <br />
                   São Paulo, SP
@@ -115,7 +118,7 @@ export function Footer() {
             {/* Links Institucionais */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-12">
               <FooterSection title="Institucional">
-                <FooterLink href="sobre-nos">Quem Somos</FooterLink>
+                <FooterLink href={ROUTES.SOBRE_NOS}>Quem Somos</FooterLink>
                 <FooterLink href="#">Lojas Físicas</FooterLink>
                 <FooterLink href="#">Blog Tático</FooterLink>
                 <FooterLink href="#">Trabalhe Conosco</FooterLink>
@@ -123,16 +126,16 @@ export function Footer() {
               </FooterSection>
 
               <FooterSection title="Atendimento">
-                <FooterLink href="central-de-ajuda">
+                <FooterLink href={ROUTES.CENTRAL_AJUDA}>
                   Central de Ajuda
                 </FooterLink>
-                <FooterLink href="#">Meus Pedidos</FooterLink>
-                <FooterLink href="trocas-e-devolucoes">
+                <FooterLink href={ROUTES.MEUS_PEDIDOS}>Meus Pedidos</FooterLink>
+                <FooterLink href={ROUTES.TROCAS_DEVOLUCOES}>
                   Trocas e Devoluções
                 </FooterLink>
                 <FooterLink href="#">Política de Frete</FooterLink>
                 <FooterLink href="#">Garantia do Produto</FooterLink>
-                <FooterLink href="faq">Perguntas Frequentes</FooterLink>
+                <FooterLink href={ROUTES.FAQ}>Perguntas Frequentes</FooterLink>
               </FooterSection>
             </div>
 
@@ -169,16 +172,18 @@ export function Footer() {
                 >
                   <div className="flex flex-wrap gap-x-8 gap-y-1 pl-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-[14px] text-gray-500">
+                      <span className="text-xs sm:text-sm text-gray-500">
                         Seg – Sex
                       </span>
-                      <span className="text-[14px] text-gray-300 font-medium">
+                      <span className="text-xs sm:text-sm text-gray-300 font-medium">
                         9h – 18h
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[14px] text-gray-500">Sábado</span>
-                      <span className="text-[14px] text-gray-300 font-medium">
+                      <span className="text-xs sm:text-sm text-gray-500">
+                        Sábado
+                      </span>
+                      <span className="text-xs sm:text-sm text-gray-300 font-medium">
                         9h – 13h
                       </span>
                     </div>
@@ -199,10 +204,10 @@ export function Footer() {
                     >
                       <Icon size={14} className="text-army shrink-0" />
                       <div className="flex items-baseline gap-1.5">
-                        <span className="text-[13px] font-semibold text-gray-300">
+                        <span className="text-xs sm:text-sm font-semibold text-gray-300">
                           {label}
                         </span>
-                        <span className="text-[11px] text-gray-600 hidden lg:inline">
+                        <span className="text-xs text-gray-600 hidden lg:inline">
                           — {desc}
                         </span>
                       </div>
@@ -233,7 +238,7 @@ export function Footer() {
               &copy; {new Date().getFullYear()} Coturnos &amp; Cia — Todos os
               direitos reservados.
             </p>
-            <p className="text-gray-600 text-[11px] mt-0.5">
+            <p className="text-gray-600 text-xs mt-0.5">
               CNPJ: 00.000.000/0001-00
             </p>
           </div>
@@ -242,7 +247,7 @@ export function Footer() {
               <a
                 key={item}
                 href="#"
-                className="text-[11px] text-gray-600 hover:text-gray-400 transition-colors uppercase tracking-wider"
+                className="text-xs text-gray-600 hover:text-gray-400 transition-colors uppercase tracking-wider"
               >
                 {item}
               </a>

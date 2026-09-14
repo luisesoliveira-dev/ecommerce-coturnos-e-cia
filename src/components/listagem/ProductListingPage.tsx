@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { produtos as allProducts } from "../../data/produtos";
+import { searchProdutos } from "../../data/search";
 import { FilterSidebar } from "./FilterSidebar";
 import { FilterDrawerMobile } from "./FilterDrawerMobile";
 import { TopBarProducts } from "./TopBarProducts";
@@ -92,6 +94,22 @@ export function ProductListingPage({
   title = "Todos os Produtos",
   initialProducts = allProducts,
 }: ProductListingPageProps) {
+  const [searchParams] = useSearchParams();
+  const buscaParam = (
+    searchParams.get("busca") ||
+    searchParams.get("q") ||
+    ""
+  ).trim();
+  const isSearchMode = buscaParam.length > 0;
+
+  // Se houver termo de busca na URL, busca produtos correspondentes
+  const baseProducts = useMemo(() => {
+    if (isSearchMode) {
+      return searchProdutos(buscaParam);
+    }
+    return initialProducts;
+  }, [isSearchMode, buscaParam, initialProducts]);
+
   const [filters, setFilters] = useState<ProductFilters>(INITIAL_FILTERS);
   const [showFilters, setShowFilters] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -109,7 +127,7 @@ export function ProductListingPage({
     (filters.terrenos?.length || 0);
 
   const filteredProducts = useMemo(() => {
-    let list = [...initialProducts];
+    let list = [...baseProducts];
 
     if (filters.tipos.length > 0) {
       list = list.filter((p) => filters.tipos.includes(p.tipo));
@@ -149,11 +167,13 @@ export function ProductListingPage({
     }
 
     return list;
-  }, [initialProducts, filters, ordenacao]);
+  }, [baseProducts, filters, ordenacao]);
 
   const filterKey = useMemo(() => {
-    return JSON.stringify(filters) + ordenacao + title;
-  }, [filters, ordenacao, title]);
+    return (
+      JSON.stringify(filters) + ordenacao + (isSearchMode ? buscaParam : title)
+    );
+  }, [filters, ordenacao, isSearchMode, buscaParam, title]);
 
   return (
     <div className="w-full min-h-screen bg-white font-barlow">
@@ -161,16 +181,53 @@ export function ProductListingPage({
         <div className="pt-10 pb-6">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-gray-400 mb-1">
-                Home / {title}
+              <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-1">
+                {isSearchMode ? (
+                  <>
+                    <Link to="/" className="hover:text-gold transition-colors">
+                      Home
+                    </Link>
+                    {" / "}
+                    <Link
+                      to="/produtos"
+                      className="hover:text-gold transition-colors"
+                    >
+                      Produtos
+                    </Link>
+                    {" / "}
+                    Busca
+                  </>
+                ) : (
+                  `Home / ${title}`
+                )}
               </p>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-black tracking-tight leading-none">
-                {title}
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-black tracking-normal leading-none">
+                {isSearchMode ? (
+                  <>
+                    Você buscou por:{" "}
+                    <span className="text-army">&quot;{buscaParam}&quot;</span>
+                  </>
+                ) : (
+                  title
+                )}
               </h1>
               <div className="w-12 h-0.75 bg-gold mt-3" />
+              {isSearchMode && (
+                <div className="mt-2.5">
+                  <Link
+                    to="/produtos"
+                    className="text-xs font-semibold text-zinc-500 hover:text-gold uppercase tracking-wider underline transition-colors"
+                  >
+                    Limpar busca e ver todos os produtos
+                  </Link>
+                </div>
+              )}
             </div>
             <p className="text-[12px] text-gray-400 uppercase tracking-widest hidden md:block pb-1">
-              {filteredProducts.length} itens encontrados
+              {filteredProducts.length}{" "}
+              {filteredProducts.length === 1
+                ? "item encontrado"
+                : "itens encontrados"}
             </p>
           </div>
         </div>
@@ -200,7 +257,7 @@ export function ProductListingPage({
                 >
                   <div className="w-56">
                     <FilterSidebar
-                      products={initialProducts}
+                      products={baseProducts}
                       filters={filters}
                       onChange={setFilters}
                       onClear={handleClear}
@@ -224,7 +281,7 @@ export function ProductListingPage({
       <FilterDrawerMobile
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        products={initialProducts}
+        products={baseProducts}
         filters={filters}
         onChange={setFilters}
         onClear={handleClear}

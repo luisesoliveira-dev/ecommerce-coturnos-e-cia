@@ -50,15 +50,15 @@ export function CardProduto({
 
       {/* INFO */}
       <div className="mt-3 text-left pb-1 pl-0.5">
-        <h3 className="font-barlow text-[13px] sm:text-[15px] font-bold text-preto leading-snug ">
+        <h3 className="font-barlow text-[15px] sm:text-base lg:text-[17px] font-bold text-preto leading-snug">
           {title}
         </h3>
-        <div className="flex items-center gap-2">
-          <p className="font-barlow text-[13px] sm:text-[15px] text-army font-extrabold">
+        <div className="flex items-center gap-2 mt-0.5">
+          <p className="font-barlow text-[15px] sm:text-base lg:text-[18px] text-army font-extrabold">
             {formatPrice(price)}
           </p>
           {oldPrice && (
-            <p className="font-barlow text-[11px] sm:text-[13px] text-gray-500 line-through">
+            <p className="font-barlow text-xs sm:text-[13px] lg:text-sm text-gray-500 line-through">
               {formatPrice(oldPrice)}
             </p>
           )}

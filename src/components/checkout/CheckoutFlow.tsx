@@ -2,18 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
-import { useCart } from "../context/useCart";
-import logo from "../assets/logo1.png";
+import { useCart } from "../../context/useCart";
+import logo from "../../assets/logo1.png";
 
 // Componentes do Checkout
-import { CheckoutStepper } from "../components/checkout/CheckoutStepper";
-import { OrderSummary } from "../components/checkout/OrderSummary";
-import { CartStep } from "../components/checkout/CartStep";
-import { DeliveryStep } from "../components/checkout/DeliveryStep";
-import { PaymentStep } from "../components/checkout/PaymentStep";
-import { ConfirmationStep } from "../components/checkout/ConfirmationStep";
+import { CheckoutStepper } from "./CheckoutStepper";
+import { OrderSummary } from "./OrderSummary";
+import { CartStep } from "./CartStep";
+import { DeliveryStep } from "./DeliveryStep";
+import { PaymentStep } from "./PaymentStep";
+import { ConfirmationStep } from "./ConfirmationStep";
 
-export default function Checkout() {
+export function CheckoutFlow() {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
   const [currentStep, setCurrentStep] = useState(1); // 1: Carrinho, 2: Entrega, 3: Pagamento, 4: Confirmação
   const [paymentMethod, setPaymentMethod] = useState("credit_card");
@@ -30,7 +30,7 @@ export default function Checkout() {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 font-barlow">
         <ShoppingBag size={64} className="text-gray-200 mb-4" />
-        <h1 className="text-2xl font-black uppercase tracking-tighter">
+        <h1 className="text-2xl font-black uppercase tracking-normal">
           Seu carrinho está vazio
         </h1>
         <p className="text-gray-500 mb-8">

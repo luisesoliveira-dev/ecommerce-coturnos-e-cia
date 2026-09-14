@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { MoveRight, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { MoveRight, Info, Zap } from "lucide-react";
 import { InputSenha } from "./InputSenha";
 import { InputCampo } from "./InputCampo";
 import { BotaoBordaDupla } from "./BotaoBordaDupla";
 import { BotaoSocial } from "./BotaoSocial";
+import { useAuth } from "../../context/useAuth";
 
 // ---------- máscaras ----------
 function mascaraCPF(v: string): string {
@@ -76,6 +78,8 @@ function validarData(data: string): boolean {
 
 export function LoginCadastro() {
   const [isLogin, setIsLogin] = useState(true);
+  const { loginDemo } = useAuth();
+  const navigate = useNavigate();
 
   const [loginForm, setLoginForm] = useState({ email: "", senha: "" });
   const [loginErros, setLoginErros] = useState<Record<string, string>>({});
@@ -97,7 +101,9 @@ export function LoginCadastro() {
     confirmaSenha: "",
     termos: false,
   });
-  const [cadastroErros, setCadastroErros] = useState<Record<string, string>>({});
+  const [cadastroErros, setCadastroErros] = useState<Record<string, string>>(
+    {},
+  );
 
   // ---------- LOGIN ----------
   function handleLoginChange(campo: string, valor: string) {
@@ -129,7 +135,9 @@ export function LoginCadastro() {
     if (cepLimpo.length !== 8) return;
 
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+      const response = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`,
+      );
       const data = await response.json();
 
       if (data.erro) {
@@ -146,7 +154,14 @@ export function LoginCadastro() {
       }));
 
       // Limpa erro de CEP caso estivesse preenchido incorretamente antes
-      setCadastroErros((prev) => ({ ...prev, cep: "", logradouro: "", bairro: "", cidade: "", estado: "" }));
+      setCadastroErros((prev) => ({
+        ...prev,
+        cep: "",
+        logradouro: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+      }));
     } catch (error) {
       console.error("Erro ao buscar CEP:", error);
     }
@@ -161,7 +176,10 @@ export function LoginCadastro() {
       if (campo === "nascimento") valorFinal = mascaraData(valor);
       if (campo === "cep") {
         valorFinal = mascaraCEP(valor);
-        if (typeof valorFinal === "string" && valorFinal.replace(/\D/g, "").length === 8) {
+        if (
+          typeof valorFinal === "string" &&
+          valorFinal.replace(/\D/g, "").length === 8
+        ) {
           buscarCEP(valorFinal);
         }
       }
@@ -312,6 +330,29 @@ export function LoginCadastro() {
               >
                 Cadastre-se <MoveRight size={22} />
               </BotaoBordaDupla>
+
+              {/* Divisor + Botão Demo */}
+              <div className="flex items-center gap-3 mt-1">
+                <div className="flex-1 border-t border-gray-200" />
+                <span className="text-[11px] text-gray-400 uppercase tracking-widest">
+                  ou
+                </span>
+                <div className="flex-1 border-t border-gray-200" />
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  loginDemo();
+                  navigate("/minha-conta");
+                }}
+                className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded border-2 border-dashed border-gold/60 text-army font-barlow font-bold uppercase tracking-wider text-sm hover:border-gold hover:bg-gold/5 transition-all duration-200 group"
+              >
+                <Zap
+                  size={16}
+                  className="text-gold group-hover:scale-110 transition-transform"
+                />
+                Entrar como Demonstração
+              </button>
             </form>
           ) : (
             <form
@@ -376,7 +417,9 @@ export function LoginCadastro() {
                 label="Logradouro (Rua, Av., etc.)"
                 required
                 value={cadastroForm.logradouro}
-                onChange={(e) => handleCadastroChange("logradouro", e.target.value)}
+                onChange={(e) =>
+                  handleCadastroChange("logradouro", e.target.value)
+                }
                 error={cadastroErros.logradouro}
               />
               <div className="flex gap-4">
@@ -385,7 +428,9 @@ export function LoginCadastro() {
                     label="Número"
                     required
                     value={cadastroForm.numero}
-                    onChange={(e) => handleCadastroChange("numero", e.target.value)}
+                    onChange={(e) =>
+                      handleCadastroChange("numero", e.target.value)
+                    }
                     error={cadastroErros.numero}
                   />
                 </div>
@@ -393,7 +438,9 @@ export function LoginCadastro() {
                   <InputCampo
                     label="Complemento"
                     value={cadastroForm.complemento}
-                    onChange={(e) => handleCadastroChange("complemento", e.target.value)}
+                    onChange={(e) =>
+                      handleCadastroChange("complemento", e.target.value)
+                    }
                     error={cadastroErros.complemento}
                   />
                 </div>
@@ -411,7 +458,9 @@ export function LoginCadastro() {
                     label="Cidade"
                     required
                     value={cadastroForm.cidade}
-                    onChange={(e) => handleCadastroChange("cidade", e.target.value)}
+                    onChange={(e) =>
+                      handleCadastroChange("cidade", e.target.value)
+                    }
                     error={cadastroErros.cidade}
                   />
                 </div>
@@ -420,7 +469,9 @@ export function LoginCadastro() {
                     label="Estado"
                     required
                     value={cadastroForm.estado}
-                    onChange={(e) => handleCadastroChange("estado", e.target.value)}
+                    onChange={(e) =>
+                      handleCadastroChange("estado", e.target.value)
+                    }
                     error={cadastroErros.estado}
                   />
                 </div>

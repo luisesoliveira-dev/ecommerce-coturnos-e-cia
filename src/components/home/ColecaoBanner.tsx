@@ -22,7 +22,7 @@ export const ColecaoBanner = () => {
           <p className="text-gold text-xs font-bold tracking-[0.35em] uppercase mb-2">
             Nossas Coleções
           </p>
-          <h2 className="text-xl sm:text-3xl font-black text-branco uppercase tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-black text-branco uppercase tracking-normal">
             Encontre o seu estilo
           </h2>
           <div className="w-10 h-0.5 bg-gold mx-auto mt-3" />
@@ -50,10 +50,10 @@ export const ColecaoBanner = () => {
 
               {/* Conteúdo */}
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 xl:p-12">
-                <p className="text-gold font-bold tracking-[0.3em] text-[10px] sm:text-xs uppercase mb-3">
+                <p className="text-gold font-bold tracking-[0.3em] text-xs uppercase mb-3">
                   {col.tag}
                 </p>
-                <h3 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-branco uppercase tracking-tighter leading-[0.9] mb-6 whitespace-pre-line">
+                <h3 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-branco uppercase tracking-normal leading-[0.95] mb-6 whitespace-pre-line">
                   {col.title}
                 </h3>
 

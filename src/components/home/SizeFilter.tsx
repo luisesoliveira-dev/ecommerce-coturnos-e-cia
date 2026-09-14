@@ -70,7 +70,7 @@ export const SizeFilter = () => {
       <div className="max-w-390 mx-auto w-full px-4 sm:px-8">
         {/* Título */}
         <div className="text-center mb-7">
-          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter text-pretoclaro">
+          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-normal text-pretoclaro">
             Compre pelo <span className="text-army">Tamanho</span>
           </h2>
           <div className="w-12 h-1 bg-gold mx-auto mt-3" />
