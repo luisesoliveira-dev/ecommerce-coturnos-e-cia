@@ -10,9 +10,9 @@ import { SecondaryCarousel } from "../components/home/SecondaryCarousel";
 import { colecaoBanner, colecaoItens } from "../data/colecao";
 import { promoSlides } from "../data/promoSlides";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-preto font-barlow">
+    <>
       <AnnouncementBar />
 
       {/* 1. Carrossel Principal */}
@@ -44,6 +44,6 @@ export default function Home() {
       <SecondaryCarousel slides={promoSlides} />
 
       <NewsletterSection />
-    </main>
+    </>
   );
 }

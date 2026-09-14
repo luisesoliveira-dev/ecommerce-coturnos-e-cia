@@ -11,6 +11,7 @@ export const ROUTES = {
   CENTRAL_AJUDA: "/central-de-ajuda",
 
   MEUS_PEDIDOS: "/pedidos",
+  MINHA_CONTA: "/minha-conta",
   CONTATO: "/contato",
   LANCAMENTOS: "/lancamentos",
 } as const;

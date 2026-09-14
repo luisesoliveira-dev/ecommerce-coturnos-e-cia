@@ -84,15 +84,15 @@ export const AnnouncementBar = () => {
             {/* Ícones */}
             <Icon className="shrink-0 text-army w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5" />
 
-            <p className="text-[11px] sm:text-xs md:text-sm font-medium leading-snug truncate sm:whitespace-normal">
-              <strong className="font-black text-pretoclaro text-[13px] sm:text-[14px] md:text-[16px]">
+            <p className="text-[13px] sm:text-sm md:text-[15px] font-medium leading-tight sm:leading-snug truncate sm:whitespace-normal">
+              <strong className="font-black text-pretoclaro text-[13px] sm:text-sm md:text-base">
                 {bold}
               </strong>{" "}
               <span className="text-pretoclaro">{rest.join(" ")}</span>
             </p>
 
             {cta && (
-              <button className="hidden sm:inline shrink-0 underline underline-offset-2 font-bold text-army hover:text-gold transition-colors cursor-pointer text-[11px] sm:text-xs md:text-sm">
+              <button className="hidden sm:inline shrink-0 underline underline-offset-2 font-bold text-army hover:text-gold transition-colors cursor-pointer text-xs md:text-sm">
                 {cta}
               </button>
             )}

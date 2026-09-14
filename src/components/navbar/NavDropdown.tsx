@@ -9,7 +9,7 @@ export interface NavDropdownProps {
 export function NavDropdown({ item }: NavDropdownProps) {
   return (
     <li className="group relative flex items-center h-full">
-      <button className="relative flex items-center gap-1 text-army text-sm font-semibold uppercase tracking-[1.5px] group-hover:text-gold transition-colors after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">
+      <button className="relative flex items-center gap-1 text-army text-[15px] font-bold uppercase tracking-[1.5px] group-hover:text-gold transition-colors after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-0.5 after:bg-gold after:transition-all after:duration-300 hover:after:w-full">
         {item.title}
         <ChevronDown
           size={14}
@@ -24,7 +24,7 @@ export function NavDropdown({ item }: NavDropdownProps) {
             <li key={link.label}>
               <Link
                 to={link.href}
-                className="block px-6 py-2.5 text-army text-[13px] font-bold uppercase tracking-wider hover:bg-gray-50 hover:text-gold transition-colors border-l-2 border-transparent hover:border-gold"
+                className="block px-6 py-2.5 text-army text-sm font-bold uppercase tracking-wider hover:bg-gray-50 hover:text-gold transition-colors border-l-2 border-transparent hover:border-gold"
               >
                 {link.label}
               </Link>

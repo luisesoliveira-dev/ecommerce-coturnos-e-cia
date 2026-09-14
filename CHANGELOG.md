@@ -4,33 +4,133 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [2.0.1] - 2026-09-12
+## [2.4.0] - 2026-09-14
 
-### Alterado 
+### Adicionado
 
+- **Camada de Constantes de Rotas (`src/constants/routes.ts`)**:
+  - Centralização de todas as rotas da aplicação em `ROUTES` (`HOME`, `LOGIN`, `PRODUTOS`, `PRODUTO_DETALHE`, `CHECKOUT`, `SOBRE_NOS`, `TROCAS_DEVOLUCOES`, `FAQ`, `CENTRAL_AJUDA`, `MEUS_PEDIDOS`, `MINHA_CONTA`, `CONTATO`, `LANCAMENTOS`).
+- **Componente de Estrutura de Layout (`src/components/layout/Layout.tsx`)**:
+  - Componente de layout global compartilhado (`Navbar + main + HelpWidget + Footer`).
+- **Asset da Página Sobre Nós (`public/about_us.png`)**:
+  - Imagem de alta qualidade integrada na página institucional Sobre Nós (`AboutUsContent.tsx`).
+- **Tipagem de Navegação (`src/types/index.ts`)**:
+  - Interface `NavbarLink` adicionada para tipagem consistente do menu de navegação.
+
+### Alterado
+
+- **Roteamento Global e Layout Unificado (`src/App.tsx`)**:
+  - Envolvimento de todas as rotas com `<Layout>`, unificando o cabeçalho (`Navbar`), o widget de suporte (`HelpWidget`) e o rodapé (`Footer`).
+  - Remoção de instâncias duplicadas de `HelpWidget`.
+  - Substituição de strings literais de rotas pelas constantes centralizadas de `ROUTES`.
+- **Limpeza das Páginas da Aplicação (`src/pages/`)**:
+  - Eliminação de importações e chamadas redundantes de `<Navbar />` e `<Footer />` em todas as páginas (`HomePage`, `ListagemProdutosPage`, `DetalheProdutoPage`, `AboutUsPage`, `ExchangesReturnsPage`, `FAQPage`, `HelpCenterPage`, `LogineCadastroPage` e `MinhaContaPage`).
+  - As páginas agora funcionam estritamente como _thin orchestrators_, delegando a estrutura visual ao `Layout`.
+- **Desacoplamento Total do Carrinho (`src/context/CartContext.tsx`, `src/components/layout/Layout.tsx` e `src/components/navbar/Navbar.tsx`)**:
+  - Estado de visibilidade do carrinho (`isCartOpen`, `openCart`, `closeCart`) promovido para o `CartContext`.
+  - O componente `<CartDrawer />` foi removido de dentro da `Navbar` e agora é renderizado globalmente dentro do `Layout`.
+  - O botão de carrinho na `Navbar` agora atua puramente como disparador chamando `openCart()`, desacoplando completamente a barra de navegação do modal.
+  - Eliminação definitiva de prop drilling (`forcedCartOpen`) na aplicação.
+- **Rodapé (`src/components/footer/Footer.tsx`)**:
+  - Links institucionais e de atendimento agora apontam para as constantes `ROUTES` (`ROUTES.SOBRE_NOS`, `ROUTES.CENTRAL_AJUDA`, `ROUTES.MEUS_PEDIDOS`, `ROUTES.TROCAS_DEVOLUCOES`, `ROUTES.FAQ`).
+- **Página Sobre Nós (`src/components/institucional/AboutUsContent.tsx`)**:
+  - Atualização do caminho da imagem institucional para `/about_us.png` com bordas arredondadas (`rounded-lg`).
+
+---
+
+## [2.3.0] - 2026-09-14
+
+### Adicionado
+
+- **Módulo e Componentes de Pesquisa em Overlay (`src/components/search/`)**:
+  - `SearchOverlay.tsx`: Orquestrador de busca estilo Nike com transição via Framer Motion, bloqueio de scroll de fundo (`useScrollLock`), fechamento via tecla `Escape`, botão "Cancelar" e clique no backdrop escuro. Responsivo: tela cheia em dispositivos móveis e tablets (`< 1024px`), e painel compacto de até `~68vh` no desktop (`>= 1024px`).
+  - `SearchInput.tsx`: Campo de busca controlado com auto-focus, ícone de lupa, botão para limpar termo (`X`) e classes elásticas com `min-w-0` prevenindo estouros no mobile.
+  - `SearchEmpty.tsx`: Estado inicial sem termo digitado, exibindo a seção _"Termos mais buscados"_ com chips clicáveis.
+  - `SearchTermChip.tsx`: Componente reutilizável de tag/pílula com borda militar e efeito hover invertido.
+  - `SearchRelatedTerms.tsx`: Coluna de termos relacionados dinâmicos com adaptação responsiva (sidebar vertical fixa no desktop `lg:`, grade de 4 colunas em tablets `md:`, e 2 colunas no mobile), com preservação de largura de coluna para manter os cards perfeitamente estáveis no desktop e tipografia com +2px no mobile (`< 640px`).
+  - `SearchResultsGrid.tsx`: Exibição adaptativa dos resultados. No desktop e tablet (`>= 768px`), grade com 4 colunas reutilizando `CardProduto`. No mobile (`< 768px`), lista horizontal em linhas com miniatura quadrada bege, título em negrito, preços calibrados, divisória sutil e botão de largura total _"Ver mais resultados"_.
+  - `SearchResults.tsx`: Layout orquestrador integrando a barra lateral de termos e a grade de resultados com `w-full` responsivo e alinhamento milimétrico na mesma linha de base (`items-start`).
+- **Camada de Dados e Lógica de Busca (`src/data/search.ts`)**:
+  - `trendingTerms`: Lista com os termos mais buscados do catálogo.
+  - `searchProdutos(query)`: Algoritmo de filtragem multi-campo (nome, tipo, cor, terreno, material, marca, categoria) com suporte a busca composta por múltiplas palavras.
+  - `getRelatedTerms(query)`: Gerador dinâmico de sugestões de termos baseado nos produtos encontrados.
+
+### Alterado
+
+- **Navbar (`src/components/navbar/Navbar.tsx`)**:
+  - Disparo do `SearchOverlay` integrado tanto ao campo de busca desktop quanto ao botão de lupa mobile.
+  - Preservação rigorosa de layout, altura (`h-16`), tipografia e espaçamentos originais.
+- **Página de Catálogo e Resultados (`src/components/listagem/ProductListingPage.tsx`)**:
+  - Reconhecimento automático do parâmetro de URL `?busca=` ou `?q=`.
+  - Cabeçalho dinâmico _"Você buscou por: \"{termo}\""_ com traço decorativo dourado e contagem de itens encontrados.
+  - Breadcrumb atualizado para `Home / Produtos / Busca` com atalho direto _"Limpar busca e ver todos os produtos"_.
+  - Conexão bidirecional com os filtros laterais (`FilterSidebar.tsx`) e drawer mobile (`FilterDrawerMobile.tsx`) para refinar os produtos encontrados pela pesquisa.
+
+---
+
+## [2.2.0] - 2026-09-14
+
+### Alterado
+
+- **Padronização Arquitetural de Páginas (Page Shell Pattern & Nomenclatura \*Page.tsx)**:
+  - Todas as páginas na pasta `src/pages/` foram convertidas em orquestradores enxutos (<15 linhas) e renomeadas uniformemente com o sufixo `Page.tsx` (`HomePage.tsx`, `AboutUsPage.tsx`, `CheckoutPage.tsx`, `DetalheProdutoPage.tsx`, `ExchangesReturnsPage.tsx`, `FAQPage.tsx`, `HelpCenterPage.tsx`, `ListagemProdutosPage.tsx`, `LogineCadastroPage.tsx`, `MinhaContaPage.tsx`).
+  - **Área do Cliente (`src/pages/MinhaContaPage.tsx`)**: Delega para `src/components/account/AccountLayout.tsx`.
+  - **Fluxo de Checkout (`src/pages/CheckoutPage.tsx`)**: Delega para `src/components/checkout/CheckoutFlow.tsx`.
+  - **Detalhe do Produto (`src/pages/DetalheProdutoPage.tsx`)**: Delega para `src/components/product/ProductDetailContent.tsx`.
+  - **Páginas Institucionais e de Suporte**:
+    - `src/pages/AboutUsPage.tsx` ➔ delega para `src/components/institucional/AboutUsContent.tsx`.
+    - `src/pages/ExchangesReturnsPage.tsx` ➔ delega para `src/components/institucional/ExchangesReturnsContent.tsx`.
+    - `src/pages/FAQPage.tsx` ➔ delega para `src/components/help/FAQContent.tsx`.
+    - `src/pages/HelpCenterPage.tsx` ➔ delega para `src/components/help/HelpCenterContent.tsx`.
+    - `src/pages/LogineCadastroPage.tsx` e `src/pages/ListagemProdutosPage.tsx`: Padronizadas com tags semânticas `<main>` e ordem consistente de imports.
+  - **Unificação de Estilos Globais (`src/App.css`)**:
+    - Consolidação de todo o CSS do projeto em um único arquivo (`src/App.css`), eliminando o antigo `src/index.css`.
+    - Migração das utilidades de scrollbar (`.custom-scrollbar`, `.no-scrollbar`) e remoção de declarações e tokens duplicados.
+  - **Padronização e Carregamento Tipográfico Oficial (Google Fonts)**:
+    - Adicionado pré-carregamento com `preconnect` e importação oficial no `index.html` das famílias **Barlow Condensed** (pesos 400, 600, 700, 800, 900) para Display/Headings/Labels/Botões e **Barlow** (pesos 400, 500, 600, 700) para leitura de corpo de texto.
+    - Configurado `--font-body: "Barlow", sans-serif` e herdado no `body` em `App.css`, garantindo compatibilidade uniforme em 100% dos navegadores (mobile e desktop) e excelente conforto de leitura.
+    - **Revisão de Espaçamento e Escala de Fontes**: Remoção de `tracking-tight`/`tracking-tighter` excessivos em títulos que causavam aglomeração de caracteres na fonte condensada (ajustados para `tracking-normal`), e elevação de fontes excessivamente pequenas (abaixo de 11px) para o padrão mínimo `text-xs` (12px), com normalização dos componentes globais (`Navbar`, `AnnouncementBar`, `MobileMenu`, `NavDropdown`, `Footer`, `CardProduto`, `VitrineProdutos`), aprimorando a legibilidade geral e consistência entre breakpoints sem alterar a identidade visual.
+  - **Tipografia e Escala Fina**: Ajuste fino do tamanho da fonte dos links desktop da Navbar (`text-[15px] font-bold tracking-[1.5px]`), da `AnnouncementBar` (`text-[13px] sm:text-sm md:text-[15px]`) e ampliação calibrada no título e preço dos cards de produto (`CardProduto`: título `text-[15px] sm:text-base lg:text-[17px]` e preço desktop `lg:text-[18px]`), proporcionando excelente legibilidade em celular, tablet e desktop sem alterar o layout.
+  - **Tipagem no React 19**: Substituição de referências globais de namespace `React.FormEvent`, `React.ChangeEvent`, `React.MouseEvent` e `React.ReactNode` por importações explícitas de tipos (`import { type FormEvent, type ChangeEvent } from "react"`).
+
+---
+
+## [2.1.0] - 2026-09-14
+
+### Adicionado
+
+- **Módulo de Autenticação e Contexto de Usuário (`src/context/`)**:
+  - Implementação de `AuthContextObject.ts` e `AuthContext.tsx` com tipagem para `AuthUser`, `UserAddress`, `Order`, `OrderStatus`, `UserNotification` e `AuthContextType`.
+  - Suporte a persistência no `localStorage`, login de demonstração (`loginDemo`), logout, atualização dinâmica de perfil e suporte a foto de perfil (`avatar`).
+  - Criação do hook customizado `src/context/useAuth.ts`.
+- **Camada de Dados da Conta (`src/data/account.ts`)**:
+  - Criação do arquivo de dados `src/data/account.ts` centralizando todos os dados mockados da conta (`DEMO_USER`) e constantes de opções de motivos de troca (`EXCHANGE_REASONS`), mantendo os componentes e contextos desacoplados de dados estáticos.
+- **Área do Cliente e Painel do Usuário (`src/pages/MinhaConta.tsx` e `src/components/account/`)**:
+  - Nova página `/minha-conta` com roteamento dinâmico via query param `?secao=`.
+  - **Sidebar Desktop & Tabs Mobile**: Navegação lateral completa para desktop e abas com scroll/arraste horizontal com detecção de movimento (`dragDistance`) e centralização automática no mobile.
+  - **Painel Geral (`AccountDashboard.tsx`)**: Resumo da conta, atalhos rápidos numerados `01`, `02`, `03` e card de destaque do último pedido com status em tempo real.
+  - **Gestão de Dados Pessoais (`PersonalData.tsx`)**: Upload e preview de foto de perfil (JPG/PNG/WebP até 2MB), grid de 2 colunas no desktop, e-mail protegido como somente leitura e fluxo isolado de alteração de senha com validações.
+  - **Gestão de Endereços (`MyAddresses.tsx`)**: Cadastro e remoção de endereços, autocompletar via API do ViaCEP, definição de endereço principal e grid responsivo de 2 colunas no desktop.
+  - **Acompanhamento de Pedidos (`MyOrders.tsx`)**: Accordion animado de detalhes do pedido, stepper com beacon de progresso e botão de cópia de código de rastreamento.
+  - **Trocas e Devoluções Humanizado (`ExchangeGuarantee.tsx`)**: Formulário manual de solicitação de troca de numeração ou garantia com geração de protocolo e encaminhamento para atendimento via WhatsApp/e-mail.
+  - **Central de Notificações (`Notifications.tsx`)**: Alertas categorizados com ações para marcar como lidas individualmente ou em lote.
+- **Estilos Globais (`src/index.css`)**:
+  - Utilitário `.no-scrollbar` compatível com Safari/Chrome/Firefox mantendo o comportamento de rolagem nativo.
+
+### Alterado
+
+- **Navbar & Menu Mobile (`src/components/navbar/`)**:
+  - `Navbar.tsx`: Renderização da foto de perfil do usuário (ou inicial), badge dinâmico de notificações não lidas e dropdown de acesso rápido às seções da conta.
+  - `MobileMenu.tsx`: Integração do usuário autenticado com avatar e botão de logout.
+- **Roteamento Global (`src/App.tsx` e `src/main.tsx`)**:
+  - Encapsulamento de toda a aplicação no `<AuthProvider>`.
+  - Registro da rota `/minha-conta`.
+- **Paleta de Cores e Padrão Visual**:
+  - Eliminação de tons turvos/bege-marrom (`#F5F0EA`) na área do cliente, adotando padrão limpo de grandes e-commerces (branco puro, cinza neutro `zinc-50`, bordas `zinc-200` e acentos elegantes Army Green e Gold).
+
+---
 
 ## [2.0.0] - 2026-09-08
-
-- **Estrutura de Layout (`src/components/layout/`)**:
-  - Criação de componentes compartilhados para centralizar a estrutura visual das páginas.
-  - Reorganização da composição do layout para separar elementos globais da aplicação.
-- **Constantes da Aplicação (`src/constants/`)**:
-  - Criação da camada de constantes para centralizar valores e configurações reutilizados pela aplicação.
-  - Redução de valores fixos distribuídos entre os componentes.
-- **Navegação e Menu**:
-  - Atualização do Navbar.tsx e Footer.tsx para adequação à nova estrutura de layout.
-  - Refatoração de menu.ts com tipagem utilizando as interfaces centralizadas em src/types/.
-- **Páginas da Aplicação**: 
-  - Atualização das páginas Home.tsx, ListagemProdutos.tsx, DetalheProduto.tsx, LogineCadastro.tsx, 
-  - AboutUs.tsx, ExchangesReturns.tsx, FAQ.tsx e HelpCenter.tsx para adequação à arquitetura TypeScript.
-  - Ajustes de integração com a nova estrutura de componentes e constantes, mantendo o layout existente.
-- **Página Institucional "Sobre Nós":**
-  - Inclusão de imagem institucional em public/about_us.png.
-  - Ajuste da estrutura da página para exibição da imagem abaixo do conteúdo institucional.
-- **Aplicação (src/App.tsx):**
-  - Atualização da composição principal da aplicação para integração da nova estrutura de layout.
-- **Tipagem (src/types/index.ts):**
-  - Atualização das interfaces e contratos utilizados pelas páginas e componentes durante a continuidade da migração para TypeScript.
 
 ### Alterado
 

@@ -72,7 +72,7 @@ export function ColecaoDestaque({
         {/* CABEÇALHO */}
         <div className="flex justify-between items-end mb-4 sm:mb-6">
           <div>
-            <h2 className="text-[18px] sm:text-2xl lg:text-3xl font-black uppercase text-preto tracking-tight">
+            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black uppercase text-preto tracking-normal">
               {title}
             </h2>
           </div>

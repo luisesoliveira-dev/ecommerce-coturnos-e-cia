@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +23,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable & AI Agent Binaries / Local Configs
+.gemini/
+.agent/
+.impeccable/
+DESIGN.md
+PRODUCT.md
+
+

@@ -10,7 +10,6 @@ export interface CartDrawerProps {
   onClose: () => void;
 }
 
-
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
@@ -75,7 +74,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   <div className="w-24 h-24 bg-army/10 rounded-full flex items-center justify-center mb-8">
                     <ShoppingBag size={48} className="text-army" />
                   </div>
-                  <h3 className="text-xl font-black uppercase text-preto tracking-tighter">
+                  <h3 className="text-xl font-black uppercase text-preto tracking-normal">
                     Seu carrinho está vazio
                   </h3>
                   <p className="text-gray-400 mt-3 text-sm leading-relaxed max-w-240px">
@@ -106,7 +105,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <div className="flex-1 flex flex-col justify-between h-38 py-1">
                         <div>
                           <div className="flex justify-between items-start">
-                            <h3 className="text-[13px] sm:text-sm font-black uppercase text-preto leading-tight pr-2">
+                            <h3 className="text-sm font-black uppercase text-preto leading-tight pr-2">
                               {item.name}
                             </h3>
                             <button
@@ -116,7 +115,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                               <Trash2 size={16} />
                             </button>
                           </div>
-                          <p className="text-[10px] sm:text-[11px] text-gray-400 uppercase mt-1 font-bold tracking-wider">
+                          <p className="text-xs text-gray-400 uppercase mt-1 font-bold tracking-wider">
                             Tam: {item.size} | Cor: {item.color}
                           </p>
                         </div>
@@ -129,7 +128,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             >
                               <Minus size={12} />
                             </button>
-                            <span className="w-6 text-center text-[12px] font-bold">
+                            <span className="w-6 text-center text-xs font-bold">
                               {item.quantity}
                             </span>
                             <button
@@ -156,17 +155,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <div className="flex flex-col gap-4 mb-6">
                   <div className="flex justify-between items-center text-gray-500 text-sm font-bold uppercase tracking-wider">
                     <span>Subtotal</span>
-                    <span>
-                      {formatPrice(subtotal)}
-                    </span>
+                    <span>{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between items-center text-preto text-xl font-black uppercase tracking-tighter">
+                  <div className="flex justify-between items-center text-preto text-xl font-black uppercase tracking-normal">
                     <span>Total</span>
-                    <span className="text-army">
-                      {formatPrice(subtotal)}
-                    </span>
+                    <span className="text-army">{formatPrice(subtotal)}</span>
                   </div>
-                  <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest text-center mt-2">
+                  <p className="text-xs text-gray-400 uppercase font-bold tracking-widest text-center mt-2">
                     Frete e impostos calculados no checkout
                   </p>
                 </div>
@@ -174,13 +169,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 <div className="flex flex-col gap-3">
                   <button
                     onClick={handleCheckout}
-                    className="w-full bg-preto text-white py-5 font-black uppercase tracking-[0.2em] text-[12px] sm:text-sm hover:bg-army transition-colors shadow-lg cursor-pointer"
+                    className="w-full bg-preto text-white py-5 font-black uppercase tracking-[0.2em] text-xs sm:text-sm hover:bg-army transition-colors shadow-lg cursor-pointer"
                   >
                     Finalizar Compra
                   </button>
                   <button
                     onClick={onClose}
-                    className="w-full bg-preto text-white py-5 font-black uppercase tracking-[0.2em] text-[12px] sm:text-sm hover:bg-army transition-colors shadow-lg cursor-pointer"
+                    className="w-full bg-preto text-white py-5 font-black uppercase tracking-[0.2em] text-xs sm:text-sm hover:bg-army transition-colors shadow-lg cursor-pointer"
                   >
                     Continuar Comprando
                   </button>
@@ -193,4 +188,3 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     </AnimatePresence>
   );
 }
-

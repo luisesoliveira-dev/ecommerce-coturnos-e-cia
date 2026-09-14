@@ -27,7 +27,7 @@ export function OrderSummary({
   return (
     <div className="lg:sticky lg:top-32 space-y-6">
       <div className="bg-white p-6 sm:p-8 border border-gray-100 rounded-sm">
-        <h3 className="text-lg font-black uppercase tracking-tighter mb-6 border-b border-gray-50 pb-4">
+        <h3 className="text-lg font-black uppercase tracking-normal mb-6 border-b border-gray-50 pb-4">
           Resumo do Pedido
         </h3>
 

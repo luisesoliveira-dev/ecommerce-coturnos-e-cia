@@ -34,6 +34,10 @@ export interface CartContextType {
   updateQuantity: (cartKey: string, delta: number) => void;
   removeFromCart: (cartKey: string) => void;
   clearCart: () => void;
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 export interface ColecaoItem {

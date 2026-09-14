@@ -24,7 +24,7 @@ export function CartStep({
     >
       <div className="flex items-center gap-3 mb-6">
         <ShoppingBag className="text-army" />
-        <h2 className="text-2xl font-black uppercase tracking-tighter">
+        <h2 className="text-2xl font-black uppercase tracking-normal">
           Seu Carrinho
         </h2>
       </div>
@@ -42,17 +42,17 @@ export function CartStep({
             <div className="flex-1 flex flex-col justify-between py-0.5 sm:py-1">
               <div>
                 <div className="flex justify-between items-start gap-2 sm:gap-4">
-                  <h3 className="font-bold uppercase tracking-tight text-[12px] sm:text-base leading-tight">
+                  <h3 className="font-bold uppercase tracking-normal text-xs sm:text-base leading-tight">
                     {item.name}
                   </h3>
                   <button
                     onClick={() => removeFromCart(item.cartKey)}
-                    className="text-gray-400 hover:text-red-500 text-[9px] sm:text-[10px] font-bold uppercase underline tracking-widest transition-colors cursor-pointer"
+                    className="text-gray-400 hover:text-red-500 text-xs font-bold uppercase underline tracking-widest transition-colors cursor-pointer"
                   >
                     Remover
                   </button>
                 </div>
-                <p className="text-[9px] sm:text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1">
+                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-1">
                   TAM: {item.size} • COR: {item.color}
                 </p>
               </div>
@@ -65,7 +65,7 @@ export function CartStep({
                   >
                     -
                   </button>
-                  <span className="w-6 h-7 sm:w-8 sm:h-8 flex items-center justify-center font-bold text-[11px] sm:text-xs">
+                  <span className="w-6 h-7 sm:w-8 sm:h-8 flex items-center justify-center font-bold text-xs">
                     {item.quantity}
                   </span>
                   <button
@@ -76,7 +76,7 @@ export function CartStep({
                   </button>
                 </div>
                 <div className="text-right">
-                  <span className="block text-[9px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest line-through leading-none mb-1">
+                  <span className="block text-xs text-gray-400 font-bold uppercase tracking-widest line-through leading-none mb-1">
                     {formatPrice(item.price * 1.2)}
                   </span>
                   <span className="font-black text-sm sm:text-lg leading-none">

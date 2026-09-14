@@ -83,7 +83,7 @@ export function ProductInfo({ product, onOpenCart }: ProductInfoProps) {
         <span className="text-army font-bold uppercase tracking-widest text-xs">
           Premium Collection
         </span>
-        <h1 className="text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-tighter leading-none text-preto">
+        <h1 className="text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-normal leading-none text-preto">
           {product.name}
         </h1>
         <div className="flex items-center gap-4 mt-2">
@@ -199,7 +199,7 @@ export function ProductInfo({ product, onOpenCart }: ProductInfoProps) {
             onChange={handleCepChange}
             className="w-full min-w-0 bg-white border border-gray-200 px-3 xl:px-4 py-3 text-sm font-medium focus:border-army focus:outline-none transition-colors"
           />
-          <button className="bg-preto text-white px-4 xl:px-6 py-3 text-[10px] xl:text-xs font-bold uppercase tracking-widest hover:bg-army transition-colors shrink-0 flex items-center justify-center leading-none pt-3.25 pb-2.75 cursor-pointer">
+          <button className="bg-preto text-white px-4 xl:px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-army transition-colors shrink-0 flex items-center justify-center leading-none pt-3.25 pb-2.75 cursor-pointer">
             Calcular
           </button>
         </div>
@@ -207,7 +207,7 @@ export function ProductInfo({ product, onOpenCart }: ProductInfoProps) {
           href="https://buscacepinter.correios.com.br/app/endereco/index.php"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[10px] font-bold uppercase tracking-tight text-gray-400 hover:text-army transition-colors underline underline-offset-2"
+          className="text-xs font-bold uppercase tracking-normal text-gray-400 hover:text-army transition-colors underline underline-offset-2"
         >
           Não sei meu CEP
         </a>

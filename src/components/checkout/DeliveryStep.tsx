@@ -12,7 +12,7 @@ export function DeliveryStep() {
     >
       <div className="flex items-center gap-3 mb-6">
         <Truck className="text-army" />
-        <h2 className="text-2xl font-black uppercase tracking-tighter">
+        <h2 className="text-2xl font-black uppercase tracking-normal">
           Dados de Entrega
         </h2>
       </div>
@@ -25,19 +25,25 @@ export function DeliveryStep() {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 sm:gap-3 mb-1">
-              <span className="text-[12px] sm:text-sm font-black uppercase tracking-widest text-black">Casa</span>
-              <span className="bg-army text-white text-[8px] sm:text-[9px] font-black px-1.5 sm:px-2 py-0.5 uppercase tracking-tighter">Principal</span>
+              <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-black">
+                Casa
+              </span>
+              <span className="bg-army text-white text-[10px] sm:text-xs font-black px-2 py-0.5 uppercase tracking-normal">
+                Principal
+              </span>
             </div>
-            <p className="text-[12px] sm:text-sm text-gray-500 font-medium leading-relaxed">
-              Avenida das Missões, 1500 - Bloco C, Apto 42<br />
-              Bairro Tático, São Paulo - SP<br />
+            <p className="text-xs sm:text-sm text-gray-500 font-medium leading-relaxed">
+              Avenida das Missões, 1500 - Bloco C, Apto 42
+              <br />
+              Bairro Tático, São Paulo - SP
+              <br />
               CEP: 01234-567
             </p>
             <div className="flex gap-4 mt-3 sm:mt-4">
-              <button className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-army underline underline-offset-4 hover:text-black transition-colors cursor-pointer">
+              <button className="text-xs font-black uppercase tracking-widest text-army underline underline-offset-4 hover:text-black transition-colors cursor-pointer">
                 Editar
               </button>
-              <button className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-gray-400 underline underline-offset-4 hover:text-black transition-colors cursor-pointer">
+              <button className="text-xs font-black uppercase tracking-widest text-gray-400 underline underline-offset-4 hover:text-black transition-colors cursor-pointer">
                 Escolher outro...
               </button>
             </div>
@@ -46,7 +52,7 @@ export function DeliveryStep() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-[12px] sm:text-sm font-black uppercase tracking-widest text-black flex items-center gap-2">
+        <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-black flex items-center gap-2">
           Método de Envio
         </h3>
         <div className="grid grid-cols-1 gap-3">
@@ -57,11 +63,17 @@ export function DeliveryStep() {
                 <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-army"></div>
               </div>
               <div>
-                <span className="block font-bold text-[12px] sm:text-sm uppercase tracking-widest group-hover:text-army transition-colors">Entrega Padrão</span>
-                <span className="block text-[8px] sm:text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-tight mt-0.5">Até 7 dias úteis • Correios / Loggi</span>
+                <span className="block font-bold text-xs sm:text-sm uppercase tracking-widest group-hover:text-army transition-colors">
+                  Entrega Padrão
+                </span>
+                <span className="block text-xs text-gray-500 uppercase font-bold tracking-widest leading-tight mt-0.5">
+                  Até 7 dias úteis • Correios / Loggi
+                </span>
               </div>
             </div>
-            <span className="font-black text-[12px] sm:text-sm text-army shrink-0 ml-2">R$ 25,90</span>
+            <span className="font-black text-xs sm:text-sm text-army shrink-0 ml-2">
+              R$ 25,90
+            </span>
           </label>
 
           {/* Opção Retirada */}
@@ -69,15 +81,20 @@ export function DeliveryStep() {
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-gray-200 group-hover:border-army/50"></div>
               <div>
-                <span className="block font-bold text-[12px] sm:text-sm uppercase tracking-widest group-hover:text-black">Retirada em Loja</span>
-                <span className="block text-[8px] sm:text-[10px] text-gray-500 uppercase font-bold tracking-widest leading-tight mt-0.5">Pronto em até 2 horas • Loja Matriz</span>
+                <span className="block font-bold text-xs sm:text-sm uppercase tracking-widest group-hover:text-black">
+                  Retirada em Loja
+                </span>
+                <span className="block text-xs text-gray-500 uppercase font-bold tracking-widest leading-tight mt-0.5">
+                  Pronto em até 2 horas • Loja Matriz
+                </span>
               </div>
             </div>
-            <span className="font-black text-[12px] sm:text-sm text-green-600 uppercase italic shrink-0 ml-2">Grátis</span>
+            <span className="font-black text-xs sm:text-sm text-green-600 uppercase italic shrink-0 ml-2">
+              Grátis
+            </span>
           </label>
         </div>
       </div>
-
     </motion.div>
   );
 }
