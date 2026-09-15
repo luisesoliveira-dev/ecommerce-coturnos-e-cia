@@ -4,6 +4,30 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [2.4.1] - 2026-09-15
+
+### Adicionado
+
+- **Redirecionamento Inteligente com Guard de Autenticação (`src/components/footer/Footer.tsx` e `src/App.tsx`)**:
+  - Implementado fluxo condicional no link "Meus Pedidos" do rodapé:
+    - Usuário autenticado: navegação direta para a aba de pedidos da conta (`/minha-conta?secao=pedidos`).
+    - Usuário não autenticado: redirecionamento automático para a tela de autenticação (`/login?redirect=%2Fminha-conta%3Fsecao%3Dpedidos`).
+  - Mapeamento e proteção da rota direta `ROUTES.MEUS_PEDIDOS` (`/pedidos`) em `App.tsx` via componente utilitário `PedidosRedirect`, garantindo a mesma experiência mesmo se o usuário acessar a URL diretamente no navegador.
+- **Suporte a Retorno Pós-Login (`src/components/auth/LoginCadastro.tsx`)**:
+  - Leitura do query param `?redirect` para reencaminhar o usuário à sua página de destino pretendida.
+  - Suporte integrado no envio do formulário de login tradicional, no formulário de cadastro, no login de demonstração e nos botões de login social (Google, Facebook, Apple).
+- **Configuração de Deploy SPA na Vercel (`vercel.json`)**:
+  - Adicionada regra de _rewrites_ direcionando todas as requisições para `/index.html`, eliminando erros 404 em acessos diretos a rotas ou refresh de página.
+
+### Corrigido
+
+- **Navegação Client-Side no Rodapé (`src/components/footer/FooterLink.tsx`)**:
+  - Substituição da tag `<a>` nativa pelo componente `<Link>` do `react-router-dom`, prevenindo recarregamentos desnecessários e falhas de requisição HTTP em produção.
+- **Limpeza do Repositório Git e Build Cache (`.gitignore`)**:
+  - Remoção dos arquivos de cache de compilação do TypeScript (`tsconfig.app.tsbuildinfo` e `tsconfig.node.tsbuildinfo`) do versionamento e atualização do `.gitignore`.
+
+---
+
 ## [2.4.0] - 2026-09-14
 
 ### Adicionado

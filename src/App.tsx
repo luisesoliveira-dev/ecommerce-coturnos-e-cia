@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LogineCadastroPage from "./pages/LogineCadastroPage";
 import ListagemProdutosPage from "./pages/ListagemProdutosPage";
@@ -12,6 +12,21 @@ import HelpCenterPage from "./pages/HelpCenterPage";
 import MinhaContaPage from "./pages/MinhaContaPage";
 import Layout from "./components/layout/Layout";
 import { ROUTES } from "./constants/routes";
+import { useAuth } from "./context/useAuth";
+
+function PedidosRedirect() {
+  const { user } = useAuth();
+  const target = `${ROUTES.MINHA_CONTA}?secao=pedidos`;
+  if (user) {
+    return <Navigate to={target} replace />;
+  }
+  return (
+    <Navigate
+      to={`${ROUTES.LOGIN}?redirect=${encodeURIComponent(target)}`}
+      replace
+    />
+  );
+}
 
 function App() {
   return (
@@ -30,6 +45,7 @@ function App() {
         <Route path={ROUTES.FAQ} element={<FAQPage />} />
         <Route path={ROUTES.CENTRAL_AJUDA} element={<HelpCenterPage />} />
         <Route path={ROUTES.MINHA_CONTA} element={<MinhaContaPage />} />
+        <Route path={ROUTES.MEUS_PEDIDOS} element={<PedidosRedirect />} />
       </Routes>
     </Layout>
   );
