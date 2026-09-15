@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { MoveRight, Info, Zap } from "lucide-react";
 import { InputSenha } from "./InputSenha";
 import { InputCampo } from "./InputCampo";
 import { BotaoBordaDupla } from "./BotaoBordaDupla";
 import { BotaoSocial } from "./BotaoSocial";
 import { useAuth } from "../../context/useAuth";
+import { DEMO_USER } from "../../data/account";
 
 // ---------- máscaras ----------
 function mascaraCPF(v: string): string {
@@ -78,8 +79,11 @@ function validarData(data: string): boolean {
 
 export function LoginCadastro() {
   const [isLogin, setIsLogin] = useState(true);
-  const { loginDemo } = useAuth();
+  const { login, loginDemo } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo =
+    new URLSearchParams(location.search).get("redirect") || "/minha-conta";
 
   const [loginForm, setLoginForm] = useState({ email: "", senha: "" });
   const [loginErros, setLoginErros] = useState<Record<string, string>>({});
@@ -126,7 +130,11 @@ export function LoginCadastro() {
       setLoginErros(erros);
       return;
     }
-    console.log("Login enviado:", loginForm); // TODO: chamar API
+    login({
+      ...DEMO_USER,
+      email: loginForm.email,
+    });
+    navigate(redirectTo);
   }
 
   // ---------- VIA CEP ----------
@@ -240,7 +248,39 @@ export function LoginCadastro() {
       setCadastroErros(erros);
       return;
     }
-    console.log("Cadastro enviado:", cadastroForm); // TODO: chamar API
+    login({
+      ...DEMO_USER,
+      name: cadastroForm.nome,
+      email: cadastroForm.email,
+      cpf: cadastroForm.cpf,
+      phone: cadastroForm.celular,
+      birthdate: cadastroForm.nascimento,
+      addresses: [
+        {
+          id: `addr-${Date.now()}`,
+          label: "Principal",
+          street: cadastroForm.logradouro,
+          number: cadastroForm.numero,
+          complement: cadastroForm.complemento,
+          neighborhood: cadastroForm.bairro,
+          city: cadastroForm.cidade,
+          state: cadastroForm.estado,
+          zip: cadastroForm.cep,
+          isPrimary: true,
+        },
+        ...DEMO_USER.addresses,
+      ],
+    });
+    navigate(redirectTo);
+  }
+
+  function handleSocialLogin(provider: string) {
+    login({
+      ...DEMO_USER,
+      name: `Usuário ${provider}`,
+      email: `usuario.${provider.toLowerCase()}@exemplo.com`,
+    });
+    navigate(redirectTo);
   }
 
   return (
@@ -259,9 +299,21 @@ export function LoginCadastro() {
           </div>
 
           <div className="flex flex-row lg:flex-col justify-center gap-6 sm:gap-6 lg:gap-4 w-full mx-auto lg:max-w-none lg:mx-0">
-            <BotaoSocial provider="google" label="Login com Google" />
-            <BotaoSocial provider="facebook" label="Login com Facebook" />
-            <BotaoSocial provider="apple" label="Login com Apple" />
+            <BotaoSocial
+              provider="google"
+              label="Login com Google"
+              onClick={() => handleSocialLogin("Google")}
+            />
+            <BotaoSocial
+              provider="facebook"
+              label="Login com Facebook"
+              onClick={() => handleSocialLogin("Facebook")}
+            />
+            <BotaoSocial
+              provider="apple"
+              label="Login com Apple"
+              onClick={() => handleSocialLogin("Apple")}
+            />
           </div>
 
           <div className="flex lg:hidden items-center mt-8 sm:mt-10 sm:mb-2 w-full sm:max-w-102 mx-auto">
@@ -343,7 +395,7 @@ export function LoginCadastro() {
                 type="button"
                 onClick={() => {
                   loginDemo();
-                  navigate("/minha-conta");
+                  navigate(redirectTo);
                 }}
                 className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded border-2 border-dashed border-gold/60 text-army font-barlow font-bold uppercase tracking-wider text-sm hover:border-gold hover:bg-gold/5 transition-all duration-200 group"
               >

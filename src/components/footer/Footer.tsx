@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FooterLink } from "./FooterLink";
 import { FooterSection } from "./FooterSection";
 import { PaymentIcons } from "./PaymentIcons";
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import logo from "../../assets/logo1.png";
 import { ROUTES } from "../../constants/routes";
+import { useAuth } from "../../context/useAuth";
 
 const SOCIAL = [
   { Icon: InstagramIcon, label: "Instagram", href: "#" },
@@ -37,6 +39,18 @@ const SELOS = [
 
 export function Footer() {
   const [horarioOpen, setHorarioOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  function handleMeusPedidos(e: React.MouseEvent) {
+    e.preventDefault();
+    const target = `${ROUTES.MINHA_CONTA}?secao=pedidos`;
+    if (user) {
+      navigate(target);
+    } else {
+      navigate(`${ROUTES.LOGIN}?redirect=${encodeURIComponent(target)}`);
+    }
+  }
 
   return (
     <footer className="bg-pretoclaro font-barlow w-full border-t border-gold/20">
@@ -129,7 +143,17 @@ export function Footer() {
                 <FooterLink href={ROUTES.CENTRAL_AJUDA}>
                   Central de Ajuda
                 </FooterLink>
-                <FooterLink href={ROUTES.MEUS_PEDIDOS}>Meus Pedidos</FooterLink>
+                <li>
+                  <button
+                    onClick={handleMeusPedidos}
+                    className="relative text-gray-400 hover:text-gold transition-colors duration-300 text-sm flex items-center gap-2.5 group py-0.5 w-full text-left"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-army/60 group-hover:bg-gold group-hover:scale-125 transition-all duration-300 shrink-0" />
+                    <span className="group-hover:translate-x-0.5 transition-transform duration-300">
+                      Meus Pedidos
+                    </span>
+                  </button>
+                </li>
                 <FooterLink href={ROUTES.TROCAS_DEVOLUCOES}>
                   Trocas e Devoluções
                 </FooterLink>
